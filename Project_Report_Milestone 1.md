@@ -32,17 +32,37 @@ First, copy pasted source code from github to spyder, saved it as cifar10_cnn.py
 Then we created a new branch to set where to upload the files
 
 ```sh
-$ git pull #so that our local repository is up to date
-$ git checkout -b workon #create the new branch workon 
-$ git push origin workon #to push the (empty / no changes) branch into git
+$ git pull 
+``` 
+to set our local repository is up to date
+```sh
+$ git checkout -b workon 
 ```
+to create the new branch "workon"
+ 
+ ```sh
+$ git push origin workon 
+```
+to push the (empty / no changes) branch into git
+
 
 Then we uploaded the file to github with the following terminal commands:
 ```sh
-$ git add cifar10_cnn.py #tracks respectively adds the file that we want to commit to the Git index (staging area).
-$ git commit -m "First milestone: upload a first .py file to github" cifar10_cnn.py #commit & make a comment on the upload
-$ git push origin workon # push the newly tracked file into the git branch workon
-#Insert github username and password
+$ git add cifar10_cnn.py 
+```
+tracks respectively adds the file that we want to commit to the Git index (staging area).
+```
+$ git commit -m "First milestone: upload a first .py file to github" cifar10_cnn.py 
+```
+commit & make a comment on the upload
+```
+$ git push origin workon 
+```
+to push the newly tracked file into the git branch workon
+Then insert github username and password and the file is publicly availabe.
+
+
+
 # --> successfully uploaded the file with comment
 ```
 
@@ -183,7 +203,7 @@ $ sudo apt update
 $ sudo apt install git
 $ git init
 $ git pull <URL of git repository>
-$ git config --global user.name "username"
+$ git config --global username "username"
 $ git fetch 
 $ sudo apt update
 $ pip3 install keras
@@ -278,13 +298,15 @@ epochs = 3
 
 #### Task 7 & 8
 (actually a task 7 was missing)
-Create a folder for your report of this milestone in you GitHub project
-repository. Add the report and push it to GitHub. Note: It may make sense to use
-the ***markdown syntax** (like your documentation file) to write your report. Like this, you can also collaborate on your report and version it using Git (here the
-same rules for git branches apply). Only submit either a markdown document or a PDF. Microsoft Word documents or anything similar will not be accepted.
+Create a folder for your report of this milestone in your GitHub project repository. Add the report and push it to GitHub. 
 
-1. Saved the markdown syntax as md in stackedit.io or dillinger.io
-2. .....
+1. Saved the markdown syntax as md via one of the websites stackedit.io or dillinger.io
+2. Go to local directory and add the file ready to upload into git.
+3. Checkout the branch you are in inside the repository with ``git branch`` and select the desired branch with ``git checkout <desired branch>`` and update the the local folder with ``git pull``
+4. Now make the file trackable via ``git add .`` or git add  < filename >
+5. Comment your file with ``git commit -m "[your-commit-message]"``
+6. Push the file into Github with ``git push``
+7. Now check out your online repository. Your file will be available there.
 
 
 
