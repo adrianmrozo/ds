@@ -86,8 +86,10 @@ Task 2
 
 We would use virtualenv when want to test something out on our local machines, prior to put it into operation, it is like our local workbench. However we can also use directly Docker, which is meant for the operational code.
 
-5.) What is the Docker build contest?
+5.) What is the Docker build context?
 
+"The docker build command builds Docker images from a Dockerfile and a “context”. A build’s context is the set of files located in the specified PATH or URL. The build process can refer to any of the files in the context. For example, your build can use a COPY instruction to reference a file in the context."
+Source: https://docs.docker.com/engine/reference/commandline/build/
 
 6.) How can one assess the quality of a python package on PyPI?
 
