@@ -770,8 +770,25 @@ $sudo docker run hello-world
 Now Docker is installed. Success! 
 
 
+
+
+With the following we managed that we do not have to use sudo when working with Docker, found on the Docker.com website: 
+
+```
+sudo groupadd docker
+
+sudo usermod -aG docker $USER
+
+newgrp docker
+
+docker run hello-world
+```
+
+
+
 ***Get started with Docker Compose***
 Next we have followed the Docker instruction "Get started with Docker Compose" (see https://docs.docker.com/compose/gettingstarted/)
+
 
 Step 1: Setup
 ```
