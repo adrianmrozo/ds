@@ -5,8 +5,11 @@
 
 **So far this repository contains the following code:**
 https://github.com/keras-team/keras/blob/master/examples/cifar10_cnn.py
+
 Please find it's dataset and more background information about it here:
 https://www.cs.toronto.edu/~kriz/cifar.html
+
+
 Please find a more detailled description after the installation guide.
 
 ## Installation guide: 
