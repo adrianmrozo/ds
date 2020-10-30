@@ -19,6 +19,10 @@ Please find below steps on how to make the code run. As it has some dependancies
 - *Python packages (if not installed yet, see instructions below):*
     - **Keras**: (version 2.4.3 recommended, 
     - **Tensorflow** (version 2.3.1 recommmended)
+    - flask
+	- redis
+	- imutils
+	- opencv-python
 
 ### Strongly recommended:
 - OS: **Ubuntu** 20.04.1 LTS

@@ -1,4 +1,4 @@
-﻿# Project Report
+# Project Report
 
 ## Milestone 2
 Group: Adrian Mrozowski & Ludwig Kraft
@@ -770,9 +770,187 @@ $sudo docker run hello-world
 Now Docker is installed. Success! 
 
 
+***Get started with Docker Compose***
+Next we have followed the Docker instruction "Get started with Docker Compose" (see https://docs.docker.com/compose/gettingstarted/)
+
+Step 1: Setup
+```
+    $ mkdir composetest
+    $ cd composetest
+```
+This folder we have just used in the beginning for test purposes, later we transferred the files directly into the main folder.
+We created a file called app.py in your project directory and pasted this in:
+```
+    import time
+
+    import redis
+    from flask import Flask
+
+    app = Flask(__name__)
+    cache = redis.Redis(host='redis', port=6379)
+
+    def get_hit_count():
+        retries = 5
+        while True:
+            try:
+                return cache.incr('hits')
+            except redis.exceptions.ConnectionError as exc:
+                if retries == 0:
+                    raise exc
+                retries -= 1
+                time.sleep(0.5)
+
+    @app.route('/')
+    def hello():
+        count = get_hit_count()
+        return 'Hello World! I have been seen {} times.\n'.format(count)
+```
+
+(In this example, redis is the hostname of the redis container on the application’s network. We use as in the instruction the default port for Redis, 6379.)
+
+As in the instruction we created another requirements.txt in your test and paste this in:
+```
+    flask
+    redis
+```
+
+(We later added below the merged this requirements with our already existing requirements file)
+
+Step 2: Create a Dockerfile
+
+In this step, we wrote a Dockerfile that builds a Docker image. The image contains all the dependencies the Python application requires, including Python itself.
+
+In our test directory, we create a file named Dockerfile and pasted the following:
+```
+FROM python:3.7-alpine
+WORKDIR /code
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+RUN apk add --no-cache gcc musl-dev linux-headers
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+EXPOSE 5000
+COPY . .
+CMD ["flask", "run"]
+```
+
+As written in the instruciton, this tells Docker to:
+
+Build an image starting with the Python 3.7 image.
+Set the working directory to /code.
+Set environment variables used by the flask command.
+Install gcc and other dependencies
+Copy requirements.txt and install the Python dependencies.
+Add metadata to the image to describe that the container is listening on port 5000
+Copy the current directory . in the project to the workdir . in the image.
+Set the default command for the container to flask run.
+
+I (Adrian) later noticed this line defining Python Version 3.7 caused a lot of problems, more about these problems will be written later. But we already would like to note down, how this file was changed:
+
+```
+FROM python:3.8.3
+WORKDIR /code
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+RUN apk add --no-cache gcc musl-dev linux-headers
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+EXPOSE 5000
+COPY . .
+CMD ["flask", "run"]
+```
+
+For more information on how to write Dockerfiles, see the Docker user guide and the Dockerfile reference.
+
+Step 3: Define services in a Compose file
+
+We created as written in the instruction a file called docker-compose.yml in your project directory and paste the following:
+```
+version: "3.8"
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+  redis:
+    image: "redis:alpine"
+```
+This Compose file defines two services: web and redis.
+Web service
+
+The web service uses an image that’s built from the Dockerfile in the current directory. It then binds the container and the host machine to the exposed port, 5000. This example service uses the default port for the Flask web server, 5000.
+Redis service
+
+The redis service uses a public Redis image pulled from the Docker Hub registry.
+
+Step 4: Build and run your app with Compose
+
+ From our test directory, we started up your application by running docker-compose up.
+```
+    $ docker-compose up
+```
+Compose pulls a Redis image, builds an image for the code, and starts the services you defined. In this case, the code is statically copied into the image at build time.
+
+We entered http://localhost:5000/ in the browser to see the application running.
+
+One can also try http://127.0.0.1:5000.
+
+If you’re using Docker Machine on a Mac or Windows, use docker-machine ip MACHINE_VM to get the IP address of your Docker host. Then, open http://MACHINE_VM_IP:5000 in a browser.
+
+And we see a message in your browser saying:
+    Hello World! I have been seen 1 times.
+With refreshing the page, the number should increment.
+
+    Hello World! I have been seen 2 times.
+
+    hello world in browser
+
+Step 5: Edit the Compose file to add a bind mount
+
+Edit docker-compose.yml in your project directory to add a bind mount for the web service:
+
+```
+version: "3.8"
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    environment:
+      FLASK_ENV: development
+  redis:
+    image: "redis:alpine"
+```
+The new volumes key mounts the project directory (current directory) on the host to /code inside the container, allowing you to modify the code on the fly, without having to rebuild the image. The environment key sets the FLASK_ENV environment variable, which tells flask run to run in development mode and reload the code on change. This mode should only be used in development.
 
 
-2.)**Create a Docker file that installs all dependencies and can run keras and tesorflow in cpu mode**
+Step 6: Update the application
+
+Because the application code is now mounted into the container using a volume, we can make changes to its code and see the changes instantly, without having to rebuild the image.
+
+For example, we changed the Hello World! message to Hello from User!:
+```
+return 'Hello from User! I have been seen {} times.\n'.format(count)
+```
+We closed it again with the following comand:
+```
+$ docker-compose down --volumes
+```
+
+As this worked now, we started to try out our code with docker with the:
+```
+docker exec [containerID] python3 [ourfilename]
+```
+command.
+It took us quite some time and error messages, until we realized that I have to set the Python version in Docker according to our requirement in our README.md file, see above. 
+
+We also realised that we again needed additional packages, which was more obvious to us, and it worked to install them on Docker and even add them into the requirements.txt file which will be automatically loaded and installed once a docker-compose up is executed.
+
+While the standard CIFAR10 code was running in Docker once the Python version was correct and all the Python packages installed, our modified and modulized code that also was loading and testing the model was not working. After some research of the error message we had to execute the following commands in our Docker, and install 2 more packages manually (but which we added to the requirements.txt file)
+docker exec f26f900647a3 apt-get update
+docker exec f26f900647a3 apt-get install libgl1-mesa-glx libjpeg62
 
 
 
