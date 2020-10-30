@@ -5,7 +5,7 @@ def setInitials():
  #set values for training specifications
  batch_size = 32
  num_classes = 10
- epochs = 100 #Defines the amount of epochs to be processed
+ epochs = 1 #Defines the amount of epochs to be processed
  data_augmentation = True
  num_predictions = 20
  

@@ -10,11 +10,12 @@ from keras.layers import Conv2D, MaxPooling2D
 import os
 
 
-def saveCNN(model, save_dir, model_name, model_path):
+def saveCNN(model, save_dir, model_name):
  if not os.path.isdir(save_dir):
      os.makedirs(save_dir)
  model_path = os.path.join(save_dir, model_name)
  model.save(model_path)
+ return model, model_path
 
 
 def CNNstats(model, model_path, x_test, y_test):
@@ -23,5 +24,6 @@ def CNNstats(model, model_path, x_test, y_test):
  scores = model.evaluate(x_test, y_test, verbose=1)
  print('Test loss:', scores[0])
  print('Test accuracy:', scores[1])
+ return model
  
  

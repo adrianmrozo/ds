@@ -8,15 +8,15 @@ def prepareData():
  (x_train, y_train), (x_test, y_test) = cifar10.load_data()
  print('x_train shape:', x_train.shape)
  print(x_train.shape[0], 'train samples')
- print(x_test.shape[0], 'test samples')
- return (x_train, y_train), (x_test, y_test)
+ print(x_test.shape[0], 'test samples') 
+ return x_train, y_train, x_test, y_test
 
 
 
 # Convert test and training class vectors to categorical class matrices.
 
-def dataToCategorical(y_train, y_test, num_classes)
+def dataToCategorical(y_train, y_test, num_classes):
  y_train = keras.utils.to_categorical(y_train, num_classes)
  y_test = keras.utils.to_categorical(y_test, num_classes)
- 
+ return y_train, y_test
  
