@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Project name: DS group Ludwig & Adrian
 
 ## Description: 
