@@ -23,29 +23,29 @@ import os
 
 
 #module 1
-from setInitials import setInitials
-batch_size, num_classes, epochs, data_augmentation, num_predictions, model_name, save_dir = setInitials() 
+from set_initials import set_initials
+batch_size, num_classes, epochs, data_augmentation, num_predictions, model_name, save_dir = set_initials() 
 
 
 #module 2
-from prep_cifar10 import prepareData
-x_train, y_train, x_test, y_test = prepareData()
+from prep_cifar10 import prepare_data
+x_train, y_train, x_test, y_test = prepare_data()
 
 
 #module 2
-from prep_cifar10 import dataToCategorical
-y_train, y_test = dataToCategorical(y_train, y_test, num_classes)
+from prep_cifar10 import data_to_categorical
+y_train, y_test = data_to_categorical(y_train, y_test, num_classes)
 
 
 
 #module 3
-from shapeModel import addModel
-model = addModel(num_classes, x_train)
+from shape_model import add_model
+model = add_model(num_classes, x_train)
 
 
 
 #module 3
-from shapeModel import opt
+from shape_model import opt
 opt = opt()
 
 #module 4
@@ -62,11 +62,11 @@ x_train, y_train, x_test, y_test = augment(data_augmentation, x_train, y_train, 
 #module 5
 #OUTPUT:
 # Save trained model
-from output import saveCNN
-model, model_path = saveCNN(model, save_dir, model_name)
+from output import save_cnn
+model, model_path = save_cnn(model, save_dir, model_name)
 
-from output import CNNstats
-model = CNNstats(model, model_path, x_test, y_test)
+from output import cnn_stats
+model = cnn_stats(model, model_path, x_test, y_test)
 
 
 #module 6

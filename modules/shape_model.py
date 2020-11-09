@@ -8,7 +8,7 @@ from keras.layers import Conv2D, MaxPooling2D
 import os
 
 
-def addModel(num_classes, x_train):
+def add_model(num_classes, x_train):
  model = Sequential()
  model.add(Conv2D(32, (3, 3), padding='same',
                  input_shape=x_train.shape[1:]))

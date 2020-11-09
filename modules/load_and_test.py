@@ -14,12 +14,12 @@ from keras.layers import Conv2D, MaxPooling2D
 import os
 
 
-from setInitials import setInitials
-batch_size, num_classes, epochs, data_augmentation, num_predictions, model_name, save_dir = setInitials() 
+from set_initials import set_initials
+batch_size, num_classes, epochs, data_augmentation, num_predictions, model_name, save_dir = set_initials() 
 print(model_name)
 
-from prep_cifar10 import prepareData
-x_train, y_train, x_test, y_test = prepareData()
+from prep_cifar10 import prepare_data
+x_train, y_train, x_test, y_test = prepare_data()
 
 from test import testing
 testing(model_name, save_dir, batch_size, y_test)

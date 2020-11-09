@@ -1,6 +1,6 @@
 import os
 
-def setInitials():
+def set_initials():
 
  #set values for training specifications
  batch_size = 32
