@@ -1,17 +1,19 @@
-# Project name: DS group Ludwig & Adrian
+# Project name: DS Ludwig & Adrian
 
 ## Description: 
 
-**So far this repository contains the following code:**
+**This repository will lead us and the visitor through several data science toolkits and architectures**
+
+
+It starts the following code:
 https://github.com/keras-team/keras/blob/master/examples/cifar10_cnn.py
 
 Please find it's dataset and more background information about it here:
 https://www.cs.toronto.edu/~kriz/cifar.html
 
 
-Please find a more detailled description after the installation guide.
+## Installation:
 
-## Installation guide: 
 Please find below steps on how to make the code run. As it has some dependancies, the best way to make it run is to make sure to fulfill the requirements.
 ### Mandatory requirements:
 - **Python** (version 3.8.3 recommended)
