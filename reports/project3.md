@@ -20,7 +20,7 @@ More importantly there several script names and function names needed to be modi
 - setInitials &rarr; set_initials 
 - shapeModel &rarr; shape_model 		
 
-<u>fucntion names: 	
+<u>function names: 	
 - addModel &rarr; add_model 
 - saveCNN &rarr; save_cnn
 
@@ -373,23 +373,233 @@ Efforts put into the task until here: ~30h
 ***1.) How do you need to represent/transform image data to save it to a relational database?***
 
 
-Adrian: Datanamic.com gives a good overview of the options and their advantages and their [disadvantages](https://www.datanamic.com/support/storeimagesinthedatabase.html):
-A database gives you the opportunity to store photos and other small images in a database table. You can create such a database table for example when you want to create an online photo album with descriptions of your photos.
+Adrian: 
+Datanamic.com gives a good overview of the options and their advantages and their disadvantages:
+https://www.datanamic.com/support/storeimagesinthedatabase.html
+"A database gives you the opportunity to store photos and other small images in a database table. You can create such a database table for example when you want to create an online photo album with descriptions of your photos.
 
-Storing images in a database table is not recommended. There are too many disadvantages to this approach. Storing the image data in the table requires the database server to process and traffic huge amounts of data that could be better spent on processing it is best suited to. A file server can process such image files much better. 
-Storing the image data inside a binary field:
+Storing images in a database table is **not recommended**. There are too many disadvantages to this approach. Storing the image data in the table requires the database server to process and traffic huge amounts of data that could be better spent on processing it is best suited to. **A file server can process such image files much better.**
+**Storing the image data inside a binary field:**
 Storing the image data inside a binary field leaves that data only available to an application that streams raw image data to and from that field. You cannot view the image with an external standard image viewer anymore. The only advantage to this approach is that you can better secure your images because you can use the database security features.
-Store the images outside of the database:
-An alternative, and better method is to store the images outside of the database and store only a link to the image file. You only need a text field in your database table to store this information. The only problem to this approach is that you must synchronize the data in the link field with your file system. It is also very easy to use this method of storing images in combination with a programming language since most programming languages support some kind of LoadFromFile() function which can be used to display the image file.
+**Store the images outside of the database:**
+An alternative, and better method is to store the images outside of the database and store only a link to the image file. You only need a text field in your database table to store this information. The only problem to this approach is that you must synchronize the data in the link field with your file system. It is also very easy to use this method of storing images in combination with a programming language since most programming languages support some kind of LoadFromFile() function which can be used to display the image file.""
 
 Regarding the binary file, we found the following related to PostgreSQL on the official PostgreSQL website:
 https://www.postgresql.org/docs/7.4/jdbc-binary-data.html
 
-31.7. Storing Binary Data
+"**31.7. Storing Binary Data**
 PostgreSQL provides two distinct ways to store binary data. Binary data can be stored in a table using the data type bytea or by using the Large Object feature which stores the binary data in a separate table in a special format and refers to that table by storing a value of type oid in your table.
 
-In order to determine which method is appropriate you need to understand the limitations of each method. The bytea data type is not well suited for storing very large amounts of binary data. While a column of type bytea can hold up to 1 GB of binary data, it would require a huge amount of memory to process such a large value. The Large Object method for storing binary data is better suited to storing very large values, but it has its own limitations. Specifically deleting a row that contains a Large Object reference does not delete the Large Object. Deleting the Large Object is a separate operation that needs to be performed. Large Objects also have some security issues since anyone connected to the database can view and/or modify any Large Object, even if they don't have permissions to view/update the row containing the Large Object reference.
+In order to determine which method is appropriate you need to understand the limitations of each method. The bytea data type is not well suited for storing very large amounts of binary data. While a column of type bytea can hold up to 1 GB of binary data, it would require a huge amount of memory to process such a large value. The Large Object method for storing binary data is better suited to storing very large values, but it has its own limitations. Specifically deleting a row that contains a Large Object reference does not delete the Large Object. Deleting the Large Object is a separate operation that needs to be performed. Large Objects also have some security issues since anyone connected to the database can view and/or modify any Large Object, even if they don't have permissions to view/update the row containing the Large Object reference."
 
+*Remark added later: Even though the above is correct, We figured that none of the above really applies to our case, as a single CIFAR 10 image is stored as a numpy.ndarray, more about that later.*
+
+**Look at your own data set: How is your data structured (you can download and load it from the source. Some of you may use the Keras function to download it).**
+
+I found our dataset here:
+https://keras.io/api/datasets/
+https://www.cs.toronto.edu/~kriz/cifar.html
+https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz (Size: 163 MB, md5sum: c58f30108f718f92721af3b95e74349a)
+
+I downloaded it manually and took a look at it: It is a 163 MB big Tar.gz archive file, it consists of 8 files:
+readme.html (same website as above, https://www.cs.toronto.edu/~kriz/cifar.html)
+
+And the following 7 files which I was not able to open:
+batches_meta (only 158 bytes)
+and each of the following files was 31MB and also not possible to open:
+test_batch
+data_batch_1
+data_batch_2
+data_batch_3
+data_batch_4
+data_batch_5
+
+On the dataset website (www.cs.toronto.edu/~kriz/cifar.html) the actual dataset is very well described:
+I will describe the layout of the Python version of the dataset. The layout of the Matlab version is identical.
+
+"The archive contains the files data_batch_1, data_batch_2, ..., data_batch_5, as well as test_batch. Each of these files is a Python "pickled" object produced with cPickle. Here is a python2 routine which will open such a file and return a dictionary:
+```
+numpy.ndarray
+def unpickle(file):
+    import cPickle
+    with open(file, 'rb') as fo:
+        dict = cPickle.load(fo)
+    return dict
+```
+And a python3 version:
+```
+def unpickle(file):
+    import pickle
+    with open(file, 'rb') as fo:
+        dict = pickle.load(fo, encoding='bytes')
+    return dict
+```
+Loaded in this way, each of the batch files contains a dictionary with the following elements:
+
+**data** -- a 10000x3072 numpy array of uint8s. Each row of the array stores a 32x32 colour image. The first 1024 entries contain the red channel values, the next 1024 the green, and the final 1024 the blue. The image is stored in row-major order, so that the first 32 entries of the array are the red channel values of the first row of the image.
+**labels** -- a list of 10000 numbers in the range 0-9. The number at index i indicates the label of the ith image in the array data.
+
+The dataset contains another file, called batches.meta. It too contains a Python dictionary object. It has the following entries:
+
+label_names -- a 10-element list which gives meaningful names to the numeric labels in the labels array described above. For example, label_names[0] == "airplane", label_names[1] == "automobile", etc."
+
+**Explain how you would define your relational database tables in terms of
+their attributes to save your data. What kind of data types could you use
+(https://www.postgresql.org/docs/12/datatype.html):**
+
+Considering what we discovered before at, we would store the images itself as "bytea data type".
+Other descriptive attributes the following data types seem to be the most straightforward:
+integer for integers
+decimal for decimal numbers
+text for text/strings
+
+**What additional relational database table attributes might make sense to
+easily query your data (f.e. find all pictures of giraffes):**
+
+We can think of the following table attributes that might be useful, but probably not all of them will be implemented in this release, in bold the important ones:
+**Picture_ID**
+CreationTime
+**Picture**
+**ActualCategory**
+PredictedCategory
+PredictedbyModelID
+PredictionTime
+
+
+**Repeat Task 2 using a sample from your own data set! In case you deal with images, you may want to draw that picture using an appropriate Python package, after you retrieved the image from the database. To make sure, you applied the
+correct "reverse" transformation. Look here (Image.open from the Pillow
+Package):
+https://pillow.readthedocs.io/en/3.0.x/reference/Image.html#PIL.Image.open**
+
+In a first attempt, as I assumed that we are handling actual image data, I was trying to just display in a test to and handle this image data. During this test run, it became pretty clear, that is not easy. So far in my life image data were .jpg, .png etc., now I saw for the first time images saved as **numpy.ndarray**. I tried the above "pickle" function, which was not possible to implement.
+
+I implemented successfully the proposed PIL.Image.open function in python with an exemplary picture (not from our dataset, but a random picture from the internet!), so open .jpg or handling them in general is not a problem. As explained here:
+https://pillow.readthedocs.io/en/3.0.x/reference/Image.html#PIL.Image.open
+
+However we are not dealing with .jpgs in the CIFAR10 dataset directly.
+As mentioned on the Tensorflow website: website
+https://www.tensorflow.org/api_docs/python/tf/keras/datasets/cifar10/load_data
+We are handling Tuple of Numpy arrays arrays (which I can confirm, as I tested the datatypes in terminal and they were mainly numpy.ndarray and tuple datatypes, actually exactly how they wrote it on Tensorflow: Tuple of Numpy arrays), see also the original text here:
+
+tf.keras.datasets.cifar10.load_data()
+
+Returns
+Tuple of Numpy arrays: (x_train, y_train), (x_test, y_test).
+
+x_train, x_test: uint8 arrays of RGB image data with shape (num_samples, 3, 32, 32) if tf.keras.backend.image_data_format() is 'channels_first', or (num_samples, 32, 32, 3) if the data format is 'channels_last'.
+
+y_train, y_test: uint8 arrays of category labels (integers in range 0-9) each with shape (num_samples, 1). 
+
+I nevertheless did not gave up at first, and tried to display the image files out of the CIFAR10 dataset, by trying those resources:
+https://stackoverflow.com/questions/35995999/why-cifar-10-images-are-not-displayed-properly-using-matplotlib (did not print anything)
+https://gist.github.com/juliensimon/273bef4c5b4490c687b2f92ee721b546 (turned out to be Python2, I even installed Python2, but it didn't work, I also tried to convert the Python2 code into Python3 code on https://www.pythonconverter.com/, which did not work, I did not pursue it further)
+
+I also tested this first entry in this Quora response, which did not work for me:
+https://www.quora.com/How-can-l-visualize-cifar-10-data-RGB-using-python-matplotlib
+
+The second response in this Quora entry was quite elaborated. Somebody invested a lot of time to display the pictures out of the CIFAR10 dataset:
+https://github.com/pranka02/nn_CIFAR10
+By creating a Jupyter Notebook: dnn.ipynb 
+I tested it, but it also did not work on my machine. I also uploaded it into Google Colab, and downloaded again it just as a .py file, which still did not work. I tested also the datatype of some of the variable, which should actually include the image, the datatype test resulted in "none", so I gave this also up. However the uploaded Jupyter Notebook still exists in Google Colab, and IF it is correctly made, it actually offers quite some insights into how the CIFAR 10 data can be converted again into pictures (however as it did not work for me, it is to be confirmed that the code is indeed correct):
+https://colab.research.google.com/drive/1NhcaJ3EdpbmZhBch7xkHJg6tL6r0eR3Y?usp=sharing
+
+So after this extensive research and effort, I decided that we should not try to display for now (and best not at any point of time) the pictures.
+
+For a later point of time (the next milestones maybe) I prupose the database should be built as follows, one table for the 50000 train images, and one table for the 10000 test images.
+It is not the most efficient way, as they have basically the same columns/attributes, but I strongly recommend to do it this way, so that we have another layer of security, that the train and test images are seperated. As the worst thing that could happen, is that we train our model on test images.
+
+To be 100% sure, what the dataset looks like, I made experiments in python with the following code (the beginning is directly of out of the original cifar10_cnn.py main file):
+
+```
+#The data, split between train and test sets:
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+print('x_train shape:', x_train.shape)
+print(x_train.shape[0], 'train samples')
+print(x_test.shape[0], 'test samples')
+
+trainimages=(x_train)
+testimages=(x_test)
+traincategorylabels=(y_train)
+testcategorylabels=(y_test)
+
+print(keras.backend.image_data_format())
+
+(x_train, x_test) = cifar10.load_data()
+
+allpictures =(x_train, x_test)
+
+print(type(trainimages))
+print(len(trainimages))
+print(type(testimages))
+print(len(testimages))
+oneimage = testimages[1]
+print(type(oneimage))
+print(len(oneimage))
+print(type(oneimage[1]))
+notsurewhatthisis = oneimage[1]
+print(type(notsurewhatthisis))
+print(type(notsurewhatthisis[1]))
+andnotsurewhatthisiscauseserrorifprinted = notsurewhatthisis[1]
+
+print(type(traincategorylabels))
+print(len(traincategorylabels))
+print(type(traincategorylabels[1]))
+print(len(traincategorylabels[1]))
+print(traincategorylabels[1])
+print(traincategorylabels[2])
+print(traincategorylabels[3])
+print(traincategorylabels[4])
+print(traincategorylabels[5])
+print(traincategorylabels[6])
+print(traincategorylabels[7])
+print(traincategorylabels[8])
+print(traincategorylabels[9])
+print(traincategorylabels[10])
+
+print(type(oneimage))
+print(len(oneimage))
+```
+
+
+Which resulted in the following console output:
+
+```
+x_train shape: (50000, 32, 32, 3)
+50000 train samples
+10000 test samples
+channels_last
+<class 'numpy.ndarray'>
+50000
+<class 'numpy.ndarray'>
+10000
+<class 'numpy.ndarray'>
+32
+<class 'numpy.ndarray'>
+<class 'numpy.ndarray'>
+<class 'numpy.ndarray'>
+<class 'numpy.ndarray'>
+50000
+<class 'numpy.ndarray'>
+1
+[9]
+[9]
+[4]
+[1]
+[1]
+[2]
+[7]
+[8]
+[3]
+[4]
+<class 'numpy.ndarray'>
+32
+```
+
+To complete task 3, I decided to save "oneimage" from the code example above, which should represent in my understanding one exemplary image, into the database, into a table called "input_data". And load it again.
+
+However I did not find a solid way to save the image which is a numpy.ndarray into the table. As far as I understood the resources on the web, a numpy.ndarray can not be saved directly in a field of table. There were some suggestions which sounded rather experimental, and I decided after the direct saving of the oneimage (or testimages[1]) as numpy.ndarray into table caused not surprisingly an error message to just only save the length of this array by using len(testimages[1]). Once a solid convertion method will be found we will use it.
+
+All the related files you find in the folder "milestones3task3", in case you executed before the files from task 2, in the postgres folder, make sure to stop and close first all containers, as the same ports might be used. As this task 3 is just an intermediate step with little value for itself, I expect that the folder milestones3task3 will be deleted in the next release.
 
 ***2.) How is our data structured?***
 
@@ -525,7 +735,6 @@ try executing a shell in the docker container using the command  `docker exec -i
 
 
 -----
-
 
 
 
