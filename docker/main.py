@@ -13,9 +13,9 @@ from keras.models import load_model
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 
-from imutils import paths
+#from imutils import paths
 import numpy as np
-import imutils
+#import imutils
 #import cv2
 import os
 
