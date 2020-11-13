@@ -20,7 +20,7 @@ More importantly there several script names and function names needed to be modi
 - setInitials &rarr; set_initials 
 - shapeModel &rarr; shape_model 		
 
-<u>function names: 	
+<u>fucntion names: 	
 - addModel &rarr; add_model 
 - saveCNN &rarr; save_cnn
 
@@ -363,8 +363,8 @@ Now we run inside the terminal the python code `python3 postgres_db.py` , put in
 - Sometimes - without changes in the code - and after running and stopping a container and trying to start it again, the port was somehow blocked. I could not free the port, so I used another one. 
 - Changing the name of the database or the user was often confused to with other parameters, which led to running closing down the containers and opening them up again and try-and-erroring myself further one step-at-a-time. 
 
-Efforts put into the task until here: ~30h
- 
+Efforts put into the task until here LK: ~30h
+
 
 ## Task3
 
@@ -674,19 +674,187 @@ We can think of the following table attributes that might be useful:
 - PredictedbyModelID
 - PredictionTime
 
-***3.) Repeat Task 2 with this Dataset***
-
-
 
 
 ## Task4
 
 ### Multidocker Dontainer Application
 
-***1.) How do you need to represent/transform image data to save it to a relational database?***
+***1.) Testing just one image: python function test_one in test modlule***
 
+
+For testing only one image I wrote a new test-function as our previous function was not suited for that. The new test function of course belongs to the module test.py. I really took an effort to understand the code even better to extract all necessary information: one test image "testData", the according test label "test_label" and a prediction label "pred_label". 
+
+    def test_one(model):
+     # initialize the ground-truth labels for the CIFAR-10 dataset
+     gtLabels = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]
+     
+      # scale the data points into the range [0, 1]
+     print("[INFO] sampling one image from CIFAR-10...")
+     (testData, testLabels) = cifar10.load_data()[1]
+     testData = testData.astype("float") / 255.0
+     idxs = np.random.choice(testData.shape[0], size=(1,), replace=False)
+     (testData, testLabels) = (testData[idxs], testLabels[idxs])
+     testLabels = testLabels.flatten()
+    
+     # make predictions on the sample of testing data
+     print("[INFO] predicting on testing data...")
+     probs = model.predict(testData, batch_size=32)
+     predictions = probs.argmax(axis=1)
+     
+     # loop over each of the testing data points
+     for (i, prediction) in enumerate(predictions):
+    	 print("[INFO] predicted: {}, actual: {}".format(gtLabels[prediction], gtLabels[testLabels[i]]))
+    	
+     for (i, prediction) in enumerate(predictions):
+      pred_label=gtLabels[prediction]
+      test_label=gtLabels[testLabels[i]] 
+    	 
+     return testData, test_label, pred_label 
+
+<u>Problem encountered: </u> 
+that took much time was figuring out how to use the data from "predictions". In the end I decided to use the setting from the given for-loop to fill the output parameters. 
+
+***2.) Writing a python code***
+
+<u>What does it?</u>
+*This code is creating and training a cnn, testing it and then creating a postgresql database called milestone3 then testing the cnn with one single image again. Then it creates two tables  and insers the testData as label into one table and the prdeicted result as a label in the other one. Then all data is printed.*
+
+I based much of the code on the work of Task 2. 
+
+    host = "127.0.0.1"
+    database = "milestone3"
+    port = "5432"
+    user = input("Insert a name for your database:") or "postgres" #For simplicity just press enter
+    password = input("Insert a password for your database:") or "pgpass" #For simplicity just press enter
+    
+    import psycopg2
+    import numpy as np
+    
+    con = psycopg2.connect(dbname=database, user=user, password=password, host=host, port = port)
+    
+    cur = con.cursor()
+    
+    # create input data table
+    cur.execute("CREATE TABLE input_data (ID SERIAL PRIMARY KEY, input_label TEXT);")
+    
+    #create predictions table
+    cur.execute("CREATE TABLE predictions (ID SERIAL PRIMARY KEY, prediction TEXT);")
+    
+    #train the model and store it
+    #also make it available in this script
+    import main
+    model = main.model
+    
+    #store test data, test label, prediction label
+    from test import test_one
+    testData, test_label, pred_label = test_one(model)
+    
+    #load testdata into database input_data
+    cur.execute("insert into input_data (ID, input_label) values (%s, %s)", (1, test_label) )
+    
+    #load prediction into database predictions
+    cur.execute("insert into predictions (ID, prediction) values (%s, %s)", (1, pred_label) )
+    
+    
+    #execute query
+    cur.execute("select * from input_data;")
+    print ("These are the inputs that have been tested so far:")
+    print(cur.fetchall())
+    
+    
+    cur.execute("select * from predictions;")
+    print ("These are all tests we made to far:")
+    print(cur.fetchall())
+    
+    
+    #commit data to db
+    con.commit()
+    
+    
+    con.close()
+
+<u>Problem encountered: </u> 
+It was a huge problem loading an image into the table as input. I tried several versions with array, integer array, array[x] and so on, but finally decided that the image label would suffice as well.
+
+***3.) Building the .yml files***
+Check the work done in Task 2. We reused the files from there and soly changed the ports, whenever a port was already blocked from a previous try. 
+In the postgres file we add a volume and write: 
+		
+	volumes:
+		.saved_models:/var/lib/postgresql/data
+
+Finally:
+
+##  <u>How to make it all run:</u> 
+Comparable to Task 2 we first start both docker files in this order: 
+
+Build the Docker image and the respective container for running our code: 
+
+- `docker build -t ms3:001 .` 
+ - `docker run ms3:001` 
+ - `docker run --name ms3_cont -it ms3:001`
+ 
+
+To build our machine we start postgres.yml with 
+
+      docker-compose -f postgres.yml up
+      
+and afterwards pgadmin.yml with
+
+      docker-compose -f pgadmin.yml up
+
+Then we open the port in the browser with
+
+	localhost:8086
+
+and login with the data provided in the yml file. Then we run the python script in the console via 
+
+	python3 postgres_db.py
+
+<u>Notes:</u> 
+- After we ran the code for the first time, we needed to comment out the "create" command in the postgres_db script. In case we don't do that we get an error as the tables with the defined names already exist. 
+
+- The submission was done with the lines commented out.
+
+- After the tables were created and the data inserted in the browser, I disconnected the server via right click on server and connected again. The data was still available, which makes me aware, that the **volume is working**.  
+
+
+## Riddles
+
+### SQL Injection Attacks
+
+***1.) What is an SQL Injection Attack?***
+
+SQL injection, also known as SQLI, is a common attack vector that uses malicious SQL code for backend database manipulation to access information that was not intended to be displayed.
+Websites are the most frequent targets of SQL injections. There are three types of SQL injections and they are classified according to the methods they use to access backend data and their damage potential:
+- In-band SQLi (Classic)
+- Inferential SQLi (Blind)
+- Out-of-band SQLi.
+
+Data can be deleted, extracted and manipulated. Therefore it can cause huge real-world problems.
+
+Find further information on the classification [here](https://www.imperva.com/learn/application-security/sql-injection-sqli/).
+
+***2.) How to protect against SQL injections?***
+
+- **input validation (a.k.a. sanitization):**
+ it is a best practice of writing code that can identify illegitimate user inputs.
+- **web application firewall (WAF):** 
+it is commonly employed to filter out SQLI, as well as other online threats
+- **signature recognition, IP reputation:**
+Whenever a web application firewall encounters a suspicious, but not outright malicious input may cross-verify it with IP data before deciding to block the request. It only blocks the input if the IP itself has a bad reputational history.
+
+
+### Decompression Bomb
+
+***1.) What is a Decompression Bomb?***
+
+A decompression bomb is a malicious file that unpacks to an enormous amount of data - thus "flooding" the unpacking engine. That leads to crashing or rendering useless the program or system reading it. It is often employed to disable antivirus software, in order to create an opening for more traditional viruses.
+It is also called ‘zip of death’ or a zip bomb.
 
 -----
+# THE END 
 
 
 
@@ -735,7 +903,4 @@ try executing a shell in the docker container using the command  `docker exec -i
 
 
 -----
-
-
-
-
+---
