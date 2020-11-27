@@ -87,19 +87,19 @@ A much more detailed description of the Confusion Matrix can be found [here](htt
 For example: Accuracy is an output variable in our CNN, too. 
 It is defined as 
 
-$Accuracy = \frac{TP+TN}{TP + FP + TN + FN}$ 
+$$Accuracy=\frac{TP+TN}{TP+FP+TN+FN}$$
 
-That is the number of correctly classified tests per all tests done.  
+That is the number of correctly classified tests per all tests done.
 
 
 #### <u> What is Precision and Recall? Why is there often a Trade-off between them?
 Both matrics can be deducted from the Confusion Matrix - just like Accuracy. 
 
-$Precision = \frac{TP}{TP + FP}$ 	
+$$Precision=\frac{TP}{TP+FP}$$
 
 Precision is a measure that tells us what proportion of tests that we classified as 1(True), actually are 1(True). It describes the percentage of correctly classified cases of all positively classified test cases. We ask: "How many correct cases did we catch?"
 
-$Recall = \frac{TP}{TP + FN}$ 
+$$Recall=\frac{TP}{TP+FN}$$
 
 Recall is a measure that tells us what proportion of tests that actually are 1(True) were classified by the algorithm as 1(True). It describes the percentage of correctly classified cases of all actual positive test cases. We ask: "How many correct cases did we miss?"
 
@@ -128,9 +128,9 @@ Here the red distribution curve is of the positive class(1, True) and green dist
 
 The ROC is being plotted with TPR (True- Positive-Rate = Recall) against the FPR (False-Positive-Rate). We have
 
-$FPR = 1-Specificity =\frac{FP}{TN + FP}$
+$$FPR=1-Specificity=\frac{FP}{TN+FP}$$
 
-where $Specificity = \frac{TN}{TN + FP}$
+where $$Specificity=\frac{TN}{TN+FP}$$
 
 Specificity tells us what proportion of the negative class got correctly classified.
 
@@ -162,6 +162,8 @@ opencv-python == 4.4.0.46
 get started with wandb:
 https://docs.wandb.com/quickstart
 
+As all efforts to complete the task with the docker login failed, we left out the adaption of the requirements file as it was unneccessary. 
+
 Regarding the task: "Choose an appropriate metric to optimize your model". The most straightforward metric was the "accuracy" with which our trained models is able to predit a category (1 out of 10) if a picture is shown to it. I cannot think of any other metric that would make sense in this context: Of any other metric taht would measure the performance of our model better.
 
 Surprisingly task 2 went quite smooth. We approached task 2 as suggested, we created first an account (for simplicity reason we registered directly with our Github account) and started to research how we can combine WANDB with the CIFAR 10 dataset. We found a lot of sources on WANDB itself, which showed very easy and fast implementations, however they used Pytorch, we according to our knowledge is not used in our code. We also tried out the wandb "magic one line of code", which surprisingly indeed worked and created entries on our account on wandb.com. Afterwards we found however the most helpful instructions, once we clicked on "new project" on the website and they showed instruction how to implement wandb in our code if we use Keras. And it indeed worked. In order to not complicate things again with Docker, we approached task 2 for starters with the original cifar10_cnn.py file. With the idea once we make it work as planned we will eventually implement it also with Docker. In case we do not make it run in Docker in this milestone, this time we will use our lecturers offer to not use Docker in this time, to save time for exam preparations.
@@ -186,7 +188,7 @@ For sure one should make a run of more epochs, for example a 100, to determine i
 
 Regarding the W&B Login precautions, we did not have to worry so far, as we did not run the code yet as a Docker image. If we find time we will also do thar and run it as a Docker image. So far we just had to past once our wandb code into the terminal.
 
-You can find the file with which all the above was executed so far in the folder milestone4task2, with a slightly edited cifar10_cnn.py file. 
+You can find the file with which all the above was executed so far in the folder milestone4task2(later wandb), with a slightly edited cifar10_cnn.py file. We used the original code and not the modularized one as we messed up our modularized version completely, such that finally nothing worked. Now we present a working solution. 
 
 
 
@@ -206,52 +208,13 @@ I recommend to just use this link. Alternatively one can also try to run the fil
 
 At the end the Google Colab Jupyter Notebook worked quite well it displays the dataset quite well and even shows pictures out of the dataset using matlab functions. Interestingly the picture changes everytime I run again the code. I also added my own code in the second half which ended up in a dead end just with the values for the red colors. But also my code uses another approach where the file does not have to be actually downloaded, so it might be still of value in the future, in case we would like to assemble the colors ourselves together again.
 
-
-Task 0
----------
-### Clean up & catch up
-
-As kindly provided by Arthur the last feedback sheet made us aware of a few points that weren't completed in their entirety within the setting of the last milestone. We want to solve the remains in this section. 
-
-#### <u>PEP8 conformity
-Ludwig noticed that there were indeed several names set incordantly with PEP8. I quickly changed names like folder names with upper case initial letter to lower case letters (e.g. "Modules" -> "modules").
-
-More importantly there several script names and function names needed to be modified. Check several examples vicariously: 
-
-<u>script names: 	
-- setInitials &rarr; set_initials 
-- shapeModel &rarr; shape_model 		
-
-
+Additionally we added a histogramm with numpy and displayed it with matplot. 
 
 
 
 -----
 # THE END 
 
-
-
-
-
-
-
-
-----
-
-### Notes: 
-
-Commands used in the research for this task. Saved here for future use: 
-
--  Created a account on docker hub and login in terminal via: 
-``docker login`` and credentials
-- shorten command line standard line via `export PS1="\u$ "`
-
-***docker images***
-- `docker images` to view all images locally available 
-&#8594; check versions  `-a` for checking all information there is and `-q` for requesting only the image IDs
-
------
----
 
 
 
