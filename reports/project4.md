@@ -8,12 +8,16 @@ Date:  November 27, 2020
 
 Task 0
 ---------
-In case we do not manage to complete task 0 (correct and complete the last milestone) we have accepted our lecturers offer to complete it in a later stage after our exams.
+
+### Clean-up & Catch-up
+
+In case we do not manage to complete task 0 due to a late delivery of the latest feedback, we have accepted our lecturers offer to complete it in a later stage after our exams.
 
 Task 1
 ---------
+
 ### Introduction to Weights & Biases 
-Creating an account on [Weights & Biases](https://www.wandb.com/) is working straight forward with an pre-existing github account. 
+Creating an account on [Weights & Biases](https://www.wandb.com/) is working straight forward with a pre-existing github account. 
 
 I started out with the tutorial [Keras with W&B](https://colab.research.google.com/drive/1pMcNYctQpRoBKD5Z0iXeFWQD8hIDgzCV#scrollTo=Lxjw5Qckzg5W) to get an idea of how W&D is working and how our end result of this milestone should actually look like. 
 
@@ -33,7 +37,7 @@ The solution is to use Experiment Management Tools. It is a ***5-step process***
 
 #### Step 1: Formulate a hypothesis and create an experiment
 
-The first step is to define your hypothesis. This enables us to evaluate out whether the experiment on a later stage and helps finding back on the right track, in case we get lost.
+The first step is to define your hypothesis. This enables us to evaluate out whether the experiment on a later stage and helps finding back on the right track in case we get lost.
 
 #### Step 2: Define experiment variables
 
@@ -105,7 +109,7 @@ Recall is a measure that tells us what proportion of tests that actually are 1(T
 
 Why is there a Trade-Off between the two? 
 
-Precision checks the correct classification of all positively classified cases. If we only catch one correct case and it is correctly classified as correct, we get an Precision of 100%.
+Precision checks the correct classification of all positively classified cases. If we only catch one correct case and it is correctly classified as correct, we get a Precision of 100%.
 
 Recall checks the number of missed cases. If we classified every single case as correct, we would also catch all available positive cases and therefore get an Recall of 100%.
 
@@ -122,7 +126,7 @@ Is the AUC value equal to 1, the model is working perfectly and making no mistak
 
 ![](https://miro.medium.com/max/1014/1*yF8hvKR9eNfqqej2JnVKzg.png)
 
-Here the red distribution curve is of the positive class(1, True) and green distribution curve is of negative class(0, False). The better the model, the smaller the shared area of both distributions becomes. Ideally they only touch at the threshold (AUC = 1). For an model, that does only guess randomly (AUC = 0.5) both distributions would overlap completely and share their highpoint at the threshold.
+Here the red distribution curve is of the positive class(1, True) and green distribution curve is of negative class(0, False). The better the model, the smaller the shared area of both distributions becomes. Ideally they only touch at the threshold (AUC = 1). For a model, that does only guess randomly (AUC = 0.5) both distributions would overlap completely and share their highpoint at the threshold.
 
 <u> ROC </u>
 
@@ -139,7 +143,7 @@ Specificity tells us what proportion of the negative class got correctly classif
 One notices immediately, that with a perfect classifier the Area Under the Curve (AUC) equals to 1. For a random classifier exactly half. 
 
 The positively monotonous ROC curve therefore states: 
-The higher the Rate of False Positives, the higher the Recall. Meaning, the more False cases we classified as True, the more tests that are True were classified correctly as such.
+The higher the Rate of False Positives, the higher the Recall. Meaning, the more false cases we classified as True, the more tests that are True were classified correctly as such.
 
 
 
@@ -196,18 +200,18 @@ You can find the file with which all the above was executed so far in the folder
 Task 3
 ---------
 
-This task reminded me very much in the attempts I did regarding task 2 in milestone 3. I therefore took out again the code that I used back then and pasted it into a Google Colab Jupyter Notebook. I decided to use Google Colab, that even though we have a disadvantage because everything is shared with Google, it is just a bit faster as everything is saved instantaneously and can be shared in a split second with my team colleague. As time is of the essence. Also as it is not a commercial project we do not mind to share the code with google.
+This task reminded me very much in the attempts I did regarding task 2 in milestone 3. I therefore took out again the code that I used back then and pasted it into a Google Colab Jupyter Notebook. I decided to use Google Colab, that even though we have a disadvantage because everything is shared with Google, it is just a bit faster as everything is saved instantaneously and can be shared in a split second with my team colleague. As time is of the essence. Also as it is not a commercial project we do not mind sharing the code with Google.
 
-I continued where I ended, and after looking what the dataset is made of inside the numpy.ndarray I saw values like "255" which resembled a colour code, and I was thinking to analyse the colors of the dataset images as an example. I looked into it and tried several things as displaying colors with a matlab function. I even managed to display it but only a grey color came out. I read again (for 100s time) the description of the dataset: "first 32 entries of the array are the red channel" and realised all the values are only the values of the red value, and RGB consists of red, green and blue, so I was missing the green and blue values for this color. I realised that unless I do not put the values together, to have RGB values, it would make little sense to analyse any of the data further. Considering if I should try to attempt that, I remembered that I already stumbled across a Jupyter Notebook, also in task 2 in milestone 3 that was describing to some extent the data. Even though I did not managed to make it work back then, as I tried to run it locally, this time I was using Google Colab, so I tried to upload the dnn.ipynb file from https://github.com/pranka02/nn_CIFAR10 (I also forked this repository) to Google Colab.
+I continued where I ended, and after looking what the dataset is made of inside the numpy.ndarray I saw values like "255" which resembled a colour code, and I was thinking to analyse the colours of the dataset images as an example. I looked into it and tried several things as displaying colours with a matlab function. I even managed to display it but only a grey colour came out. I read again (for 100s time) the description of the dataset: "first 32 entries of the array are the red channel" and realised all the values are only the values of the red value, and RGB consists of red, green and blue, so I was missing the green and blue values for this colour. I realised that unless I do not put the values together, to have RGB values, it would make little sense to analyse any of the data further. Considering if I should try to attempt that, I remembered that I already stumbled across a Jupyter Notebook, also in task 2 in milestone 3 that was describing to some extent the data. Even though I did not managed to make it work back then, as I tried to run it locally, this time I was using Google Colab, so I tried to upload the dnn.ipynb file from https://github.com/pranka02/nn_CIFAR10 (I also forked this repository) to Google Colab.
 
-It took quite some work to make it run, as I had to write a little bit of code, that the tar.gz file with the Dataset will be downloaded automatically into a Google folder, so that the rest of the code can be executed. As I wrote in the notebook: In Google Colab, that Cifar 10 package, a tar.gz file, gets downloaded in the "/content/" directory, please adjust in case you do not use Google Colab and it was downloaded in another folder. 
+It took quite some work to make it run, as I had to write a little bit of code, that the tar.gz file with the Dataset will be downloaded automatically into a Google folder, so that the rest of the code can be executed. As I wrote in the notebook: In Google Colab, that cifar-10 package, a tar.gz file, gets downloaded in the "/content/" directory, please adjust in case you do not use Google Colab and it was downloaded in another folder. 
 
 Please find the link here:
 https://colab.research.google.com/drive/1NhcaJ3EdpbmZhBch7xkHJg6tL6r0eR3Y?usp=sharing
 
 I recommend to just use this link. Alternatively one can also try to run the file that I added in our repository in the folder "datasetanalysis" (again I would recommend it to just upload it to Google Colab).
 
-At the end the Google Colab Jupyter Notebook worked quite well it displays the dataset quite well and even shows pictures out of the dataset using matlab functions. Interestingly the picture changes every time I run again the code. I also added my own code in the second half which ended up in a dead end just with the values for the red colours. But also my code uses another approach where the file does not have to be actually downloaded, so it might be still of value in the future, in case we would like to assemble the colors ourselves together again.
+At the end the Google Colab Jupyter Notebook worked quite well it displays the dataset quite well and even shows pictures out of the dataset using matlab functions. Interestingly the picture changes every time I run again the code. I also added my own code in the second half which ended up in a dead end just with the values for the red colours. But also my code uses another approach where the file does not have to be actually downloaded, so it might be still of value in the future, in case we would like to assemble the colours ourselves together again.
 
 Additionally we added a histogram of the data of the labels in the CIFAR 10 dataset with numpy and displayed it with matplot. 
 
