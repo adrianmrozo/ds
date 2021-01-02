@@ -7,12 +7,12 @@ Date:  October 13, 2020
 
 Task 0
 ---------
-### Clean up & catch up
+### Clean-up & Catch-up
 
-As kindly provided by Arthur the last feedback sheet made us aware of a few points that weren't completed in their entirety within the setting of the last milestone. We want to solve the remains in this section. 
+As kindly provided by Arthur, the last feedback sheet made us aware of a few points that weren't completed in their entirety within the setting of the last milestone. We want to solve the remains in this section. 
 
 #### <u>PEP8 conformity
-Ludwig noticed that there were indeed several names set incordantly with PEP8. I quickly changed names like folder names with upper case initial letter to lower case letters (e.g. "Modules" -> "modules").
+Ludwig noticed that there were indeed several names set  with PEP8. I quickly changed names like folder names with upper case initial letter to lower case letters (e.g. "Modules" -> "modules").
 
 More importantly there several script names and function names needed to be modified. Check several examples vicariously: 
 
@@ -20,7 +20,7 @@ More importantly there several script names and function names needed to be modi
 - setInitials &rarr; set_initials 
 - shapeModel &rarr; shape_model 		
 
-<u>fucntion names: 	
+<u>function names: 	
 - addModel &rarr; add_model 
 - saveCNN &rarr; save_cnn
 
@@ -28,16 +28,16 @@ A crucial detail to succeed with the renaming is to rename every single referenc
 
 #### <u>Code functionality: Load and Test
 
-Even though we thought our code would be running smoothly already, the code did not yet finish but got stuck at a certain level within the test function. To handle the problem more efficiently, we wrote a load_and_test script to quickly check whether the test file was running accordingly. Before we always had to first train a CNN in accordance to test it afterwards. After the creation of the load_and_test script as well as some outcommented (useless) lines of the test script. I had to look into the code in greater detail and check 
-- firstly, where the code wasn't continuing until the end ( print-outputs help a lot) and 
+Even though we thought our code would be running smoothly already, the code did not yet finish but got stuck at a certain level within the test function. To handle the problem more efficiently, we wrote a load_and_test script to quickly check whether the test file was running accordingly. Before we always had to first train a CNN in accordance to test it afterwards. After the creation of the load_and_test script as well as some out commented (useless) lines of the test script. I had investigate the code in greater detail and check 
+- firstly, where the code was not continuing until the end ( print-outputs help a lot) and 
 - secondly, what was happening at the end of the code.
 
 By leaving out a certain line at a time within the code and quickly running the load_and_test script again helped great deal in order to debug the code. 
 I noticed that the code in the end used sample images that were not from cifar10. We do not have other images and therefore a testing with cifar10-test branches seemed to be legit. 
 
 <u>In the Linux Command Line:</u> 
-The code is now running for training, loading and testing. 
-For loading and running the code use within the folder that contains all the code modules `python3 load_and_test.py` and for training, loading and testing the CNN use `python3 main.py`
+The code is now running for training, loading, and testing. 
+For loading and running the code use within the folder that contains all the code modules `python3 load_and_test.py` and for training, loading, and testing the CNN use `python3 main.py`
 
 We still need to dockerize the modularized code. But this intersects with task 1 of the current project, so...
 
@@ -50,7 +50,7 @@ Task 1
 
 #### 1.) <u>Dockerizing the modularized code
 
-We do not yet know how to exactly build the Docker Container. It is easy to do with example Containers from with Videos from Youtube or the Docker Docs. However, we don't know exactly which parameters we should use to fill the environment of the Dockerfile. Therefore we created an **issue on github**. Check it out [here](https://github.com/adrianmrozo/ds/issues/4).
+We do not yet know how to exactly build the Docker Container. It is easy to do with example Containers from with Videos from YouTube or the Docker Docs. However, we don't know exactly which parameters we should use to fill the environment of the Dockerfile. Therefore, we created an **issue on github**. Check it out [here](https://github.com/adrianmrozo/ds/issues/4).
 
 After some research with a [playlist provided by our instructors](https://www.youtube.com/playlist?list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK) we learned a lot about building docker containers with videos numbered [8](https://www.youtube.com/watch?v=HqBMEmoAd1M&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK&index=8),  [9](https://www.youtube.com/watch?v=QBOcKdh-fwQ&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK&index=9), [10](https://www.youtube.com/watch?v=Rv3DAJbDrS0&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK&index=10) and [12](https://www.youtube.com/watch?v=LQjaJINkQXY&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK&index=12).
 
@@ -64,38 +64,38 @@ Then run the image to create a container with `docker run <image_name>`. Contain
 After that run the docker container via `docker run -it <container name>`. (If we also want to add a name for the container use  `docker run --name <my_container_name> -it <container name>`
 
 #### <u>Step-by-step</u>:
-First we need to create a fitting Dockerfile for dockerizing our python code. Adrian found great instructions [here](https://www.youtube.com/watch?v=8uaDoMuDK6E&feature=youtu.be).
+First, we need to create a fitting Dockerfile for dockerizing our python code. Adrian found great instructions [here](https://www.youtube.com/watch?v=8uaDoMuDK6E&feature=youtu.be).
 
 Understand the Dockerfile: 
 
-    # use python version 3 to get a docker image from dockerhub
+    # use python version 3 to get a docker image from DockerHub
     FROM python:3.8.5
     
     #wd in docker virtual environment
     WORKDIR /usr/src/app 
     
-    # copy all required files there (that will be our modules and trained cnn
+    # copy all required files there (that will be our modules and trained CNN
     # . to direct to current local wd. 
     # exists to copy files from current wd to virtual docker wd
     COPY all modules one-by-one .
     COPY load_and_test.py .
     COPY requirements.txt .
     
-    #we don't know, which packages are installed in the base python image. 
-    #Therefore install dependencies via requirements with fixed version number to insure 
+    #we do not know, which packages are installed in the base python image. 
+    #Therefore, install dependencies via requirements with fixed version number to insure 
     #that container will work in the future when new versions will be available
     RUN pip install --no-cache-dir -r requirements.txt
     
     # type this in the command line to execute the python file named pythonscript.py
     CMD ["python3", "./main.py"]
 
-Now we can acutally build the docker image via `docker build -t <image_name:tag_name> <location_of_Dockerfile>`, which is here `docker build -t main:001 .`
+Now we actually can build the docker image via `docker build -t <image_name:tag_name> <location_of_Dockerfile>`, which is here `docker build -t main:001 .`
 
 
 <u>Problems encountered: </u>
 Installing packages:
 - cv2 cannot be installed with its current version 4.4.0 
-- os could not be set fixed to a version &rarr; doesn't need to be fixed as "os" is a standard library and is orientated at the python version &rarr; we actually didn't need to install cv2. So we left it. Problem: When we want to tranform the docker image to a container, the missing installation of cv2 comes up again... So we definitely need to install it before creating the container. 
+- os could not be set fixed to a version &rarr; doesn't need to be fixed as "os" is a standard library and is orientated at the python version &rarr; we actually didn't need to install cv2. So we left it. Problem: When we want to transform the docker image to a container, the missing installation of cv2 comes up again... So, we definitely need to install it before creating the container. 
 Installing cv2 works locally by opening python and then simply using `import cv2`. We even get the version of the package with `cv2.__version__`. However, we don't know how to set this command in the Dockerfile. I tried several combinations in the requirements file and the docker file. 
 
 
@@ -116,16 +116,16 @@ I tried and errored myself through two nights and hours of siting in from of my 
 
 
 <u>Adrian gave it a shot as well: </u>
-We nearly managed to completely dockerize our code. However if we tried to let Docker run completely automatic our code, by adding the command:  
+We nearly managed to completely dockerize our code. However, if we tried to let Docker run completely automatic our code, by adding the command:  
 CMD [ "python", "./main.py" ]  
 at the end of our Dockerfile, we received an error message regarding this command. We tried many variations, however it did not run. 
 
-We had to ***manually*** execute our main.py file with the following command, which in our understanding made the code run within the container:`docker exec [container-id] python3 main.py` 
+We had to ***manually*** execute our main.py file with the following command, which in our understanding made the code run within the container: `docker exec [container-id] python3 main.py` 
 The model was trained, saved, and afterwards loaded again to be tested on some pictures, it was shown in the terminal the predicted picture category and the actual picture category.  
 
-We were to able to confirm that it runs in our container with the command: `docker stats [container-id]`
+We were able to confirm that it runs in our container with the command: `docker stats [container-id]`
 
-We saw the the container used a significant amount of our memory and CPU for training the model.
+We saw the container used a significant amount of our memory and CPU for training the model.
 
 Arthur gave as regarding the issue of running the main.py file by adding the command in the Dockerfile the following tip: " CMD ["python3", "./main.py"] strikes me to be a bit weird. Maybe CMD ["python3", "main.py"]?"
 
@@ -142,7 +142,7 @@ Even though Flask/Redis was not part of our milestone, we sometimes still used i
 
 
 ***2.) What services are being used in the example yml file?***
-The example yml file is stored, discussed and discribed in the issue I submitted during this milestone. Check it out again [here](https://github.com/adrianmrozo/ds/issues/4).
+The example yml file is stored, discussed and described in the issue I submitted during this milestone. Check it out again [here](https://github.com/adrianmrozo/ds/issues/4).
 
 Obviously the two used services are "web" and "redis". "Web" is being used to make the container available, i.e. binding the container and the host machine towards the port 5000 and "redis" is being used to import the publicly available image "alpine". 
 
@@ -150,13 +150,12 @@ They relate to the host names via the host and the port parameters within the Py
 
 ***3.) What ports are being used?***
 
-Within the appliation there is the port 6379 being used.
-The container and host machine are both binded to the port 5000 in the manner of `<host port>:<machine port>`
+Within the application there is the port 6379 being used.
+The container and host machine are both bound to the port 5000 in the manner of `<host port>:<machine port>`
 
 ***4.) How do host and container communicate? What ports are being exposed?***
 
-The host machine communicates with the
-application inside the Docker container over the container ID (to choose the respective container) and the ports (to locate the container). 
+The host machine communicates with the application inside the Docker container over the container ID (to choose the respective container) and the ports (to locate the container). 
 Ports mentioned in docker-compose.yml under the variable "EXPOSE" will be shared among different services started by the docker-compose.
 -Ports will also be exposed to the host machine to a random port or a given port.
 
@@ -165,7 +164,7 @@ Ports mentioned in docker-compose.yml under the variable "EXPOSE" will be shared
 
 A localhost is the name of a computer, that a program is running on. The localhost is identified by the loopback address 127.0.0.1.
 
-Another host could be a networkhost. We access a networkhost e.g. by typing a URL or website address in a web browser. That connects our machine to the networkhost. If we type "localhost" into the browser we connect to our own machine.
+Another host could be a network host. We access a network host e.g. by typing a URL or website address in a web browser. That connects our machine to the network host. If we type "localhost" into the browser, we connect to our own machine.
 
 Speaking of advantages of using a localhost, it 
 -   makes the development faster
@@ -188,7 +187,7 @@ Speaking of advantages of using a localhost, it
 
 ***1.) What is PostgreSQL? is it SQL or NoSQL?***
 
-**PostgreSQL** is a powerful, open source object-relational database managment system (RDBMS) emphasizing extensibility and SQL compliance. It has a script schema and requires a primary key. 
+**PostgreSQL** is a powerful, open source object-relational database management system (RDBMS) emphasizing extensibility and SQL compliance. It has a script schema and requires a primary key. 
 
 However, it supports SQL. 
 What is SQL though? **SQL** stands for *Structured Query Language*. It's a language that communicates with databases. It is designed for managing data held in a RDBMS.
@@ -215,14 +214,14 @@ Still, SQL is the only way to interact with a PostgreSQL database, so you couldn
 We pull a docker image from the official dockerhub [PostgreSQL website](https://hub.docker.com/_/postgres) and notice two things: 
 There are 1B+ downloads already, which means the image can be used without hesitation. And we find the pull command `docker pull postgres` to pull the image on to our machine. To get version 12.4 we edit the command to `docker pull postgres:12.4`
 
-To now make an container out of the image we use:
+To now make a container out of the image we use:
 
 
 	$ docker run --name postgres1 -q <localport>:<dockerport> -e POSTGRES_PASSWORD=mysecretpassword -d postgres:<version>
 
 With `docker ps` we can see, that the container is now up and running. We can stop it again with `docker stop <container_ID>`.
 
-However, we now want to make the container running in our browser. Therefore we need the .yml file. From the [documentation](https://hub.docker.com/_/postgres) we get a appropriate .yml file: 
+However, we now want to make the container running in our browser. Therefore we need the .yml file. From the [documentation](https://hub.docker.com/_/postgres) we get an appropriate .yml file: 
 
  
     version: '3'
@@ -260,7 +259,7 @@ Success! PostgreSQL is running on our localhost server. Now how to login? We fig
 
 Now the container is running locally. To **run it on a server**, we do the following:
 
-To build a server we use pgadmin4. Therefore we biuld another .yml file, called pgadmin.yml: 
+To build a server we use pgadmin4. Therefore we build another .yml file, called pgadmin.yml: 
 
 
 
@@ -288,14 +287,14 @@ So to run postgres on a docker container on a server, we type in the command lin
 `docker-up -f postgres.yml up` to start postgres and 
 `docker-up -f pgadmin.yml up` to start pgadmin. Now we visit our localhost on port 8080 (pgadmin is running there) and insert the login data, we stored in the .yml file.
 
-Then we add a server in the GUI using the data displayed in the postgres.yml file. Check the server and see, that there has sample database been build. This means: postgres on docker container on server at pgadmin is up and running Success!!
+Then we add a server in the GUI using the data displayed in the postgres.yml file. Check the server and see, that there has sample database been built. This means: postgres on docker container on server at pgadmin is up and running Success!!
 
 [Good guide](https://medium.com/better-programming/connect-from-local-machine-to-postgresql-docker-container-f785f00461a7) to start a database in PostgreSQL inside a Docker container and this [video](https://www.youtube.com/watch?v=sNXVP2suMA8), too. 
 
 
 ***3.) Find a python-to-postgres-adapter***
 
-psycopg2 is the package of interest. Unfortunately `pip3 install psycopg2` gives a load of error messages. We therefore try `pip3 install psycopg2-binary`. According to several installation guides it it still possible to import psycopg in the python script.
+psycopg2 is the package of interest. Unfortunately `pip3 install psycopg2` gives a load of error messages. We therefore try `pip3 install psycopg2-binary`. According to several installation guides it still possible to import psycopg in the python script.
 
 To write the python code we need data like user name, database name and port to connect to. We build and get those by the following lines: 
 
@@ -306,15 +305,15 @@ I again started a database like this:
 ``docker container run -d --name=pg -p 5433:5433 -e POSTGRES_PASSWORD=post_kasten -e PGDATA=/pgdata -v /pgdata:/pgdata postgres:12.4`` to build a docker container
  followed by 
  ``docker exec -it demo psql -U postgres`` to connect to postgres.
- Now can create an database by ``CREATE DATABASE pg_db1``
+ Now can create a database by ``CREATE DATABASE pg_db1``
  and we connect to it via  ``\c pg_db1``
  Then we are inside the database and can create a table and add information with ``CREATE TABLE pg_t(something int);`` and ``INSERT INTO pg_t (something) VALUES (1);``
- Now this is more or less, what our pyhton program is supposed to do in a infrastructural level. 
+ Now this is more or less, what our python program is supposed to do in an infrastructural level. 
  
 
 ***4.) Write a python program***
 
-Doing a layover of the two videos [this](https://www.youtube.com/watch?v=sNXVP2suMA8) and [that](https://www.youtube.com/watch?v=2PDkXviEMD0) I came up with the follwoing code that should do the job for the requirements:
+Doing a layover of the two videos [this](https://www.youtube.com/watch?v=sNXVP2suMA8) and [that](https://www.youtube.com/watch?v=2PDkXviEMD0) I came up with the following code that should do the job for the requirements:
 
 
     host = "127.0.0.1"
@@ -359,11 +358,11 @@ Then we run the container pgadmin with `docker-compose -f pgadmin.yml up` Now we
 Now we run inside the terminal the python code `python3 postgres_db.py` , put in the data provided in the postgres.yml file or simply by **pressing enter** and we get the joke displayed. Finally success!
 
 <u>Problems encountered:</u>
-- I had a huge problem managing the correct login. First we had the local host with the postgresql database running on the browser, but there was no login and password I could use. It cost me hours to try the new approach described above.
+- I had a huge problem managing the correct login. First, we had the local host with the postgresql database running on the browser, but there was no login and password I could use. It cost me hours to try the new approach described above.
 - Sometimes - without changes in the code - and after running and stopping a container and trying to start it again, the port was somehow blocked. I could not free the port, so I used another one. 
 - Changing the name of the database or the user was often confused to with other parameters, which led to running closing down the containers and opening them up again and try-and-erroring myself further one step-at-a-time. 
 
-Efforts put into the task until here LK: ~30h
+(Personal Note: Efforts put into the task until here LK: ~30h)
 
 
 ## Task3
@@ -392,7 +391,7 @@ PostgreSQL provides two distinct ways to store binary data. Binary data can be s
 
 In order to determine which method is appropriate you need to understand the limitations of each method. The bytea data type is not well suited for storing very large amounts of binary data. While a column of type bytea can hold up to 1 GB of binary data, it would require a huge amount of memory to process such a large value. The Large Object method for storing binary data is better suited to storing very large values, but it has its own limitations. Specifically deleting a row that contains a Large Object reference does not delete the Large Object. Deleting the Large Object is a separate operation that needs to be performed. Large Objects also have some security issues since anyone connected to the database can view and/or modify any Large Object, even if they don't have permissions to view/update the row containing the Large Object reference."
 
-*Remark added later: Even though the above is correct, We figured that none of the above really applies to our case, as a single CIFAR 10 image is stored as a numpy.ndarray, more about that later.*
+*Remark added later: Even though the above is correct, we figured that none of the above really applies to our case, as a single CIFAR 10 image is stored as a numpy.ndarray, more about that later.*
 
 **Look at your own data set: How is your data structured (you can download and load it from the source. Some of you may use the Keras function to download it).**
 
@@ -479,7 +478,7 @@ https://pillow.readthedocs.io/en/3.0.x/reference/Image.html#PIL.Image.open
 However we are not dealing with .jpgs in the CIFAR10 dataset directly.
 As mentioned on the Tensorflow website: website
 https://www.tensorflow.org/api_docs/python/tf/keras/datasets/cifar10/load_data
-We are handling Tuple of Numpy arrays arrays (which I can confirm, as I tested the datatypes in terminal and they were mainly numpy.ndarray and tuple datatypes, actually exactly how they wrote it on Tensorflow: Tuple of Numpy arrays), see also the original text here:
+We are handling Tuple of Numpy arrays (which I can confirm, as I tested the datatypes in terminal and they were mainly numpy.ndarray and tuple datatypes, actually exactly how they wrote it on Tensorflow: Tuple of Numpy arrays), see also the original text here:
 
 tf.keras.datasets.cifar10.load_data()
 
@@ -500,13 +499,13 @@ https://www.quora.com/How-can-l-visualize-cifar-10-data-RGB-using-python-matplot
 The second response in this Quora entry was quite elaborated. Somebody invested a lot of time to display the pictures out of the CIFAR10 dataset:
 https://github.com/pranka02/nn_CIFAR10
 By creating a Jupyter Notebook: dnn.ipynb 
-I tested it, but it also did not work on my machine. I also uploaded it into Google Colab, and downloaded again it just as a .py file, which still did not work. I tested also the datatype of some of the variable, which should actually include the image, the datatype test resulted in "none", so I gave this also up. However the uploaded Jupyter Notebook still exists in Google Colab, and IF it is correctly made, it actually offers quite some insights into how the CIFAR 10 data can be converted again into pictures (however as it did not work for me, it is to be confirmed that the code is indeed correct):
+I tested it, but it also did not work on my machine. I also uploaded it into Google Colab, and downloaded again it just as a .py file, which still did not work. I also tested the datatype of some of the variable, which should actually include the image, the datatype test resulted in "none", so I gave this also up. However the uploaded Jupyter Notebook still exists in Google Colab, and IF it is correctly made, it actually offers quite some insights into how the CIFAR 10 data can be converted again into pictures (however as it did not work for me, it is to be confirmed that the code is indeed correct):
 https://colab.research.google.com/drive/1NhcaJ3EdpbmZhBch7xkHJg6tL6r0eR3Y?usp=sharing
 
 So after this extensive research and effort, I decided that we should not try to display for now (and best not at any point of time) the pictures.
 
-For a later point of time (the next milestones maybe) I prupose the database should be built as follows, one table for the 50000 train images, and one table for the 10000 test images.
-It is not the most efficient way, as they have basically the same columns/attributes, but I strongly recommend to do it this way, so that we have another layer of security, that the train and test images are seperated. As the worst thing that could happen, is that we train our model on test images.
+For a later point of time (the next milestones maybe) I propose the database should be built as follows, one table for the 50000 train images, and one table for the 10000 test images.
+It is not the most efficient way, as they have basically the same columns/attributes, but I strongly recommend doing it this way, so that we have another layer of security, that the train and test images are separated. As the worst thing that could happen, is that we train our model on test images.
 
 To be 100% sure, what the dataset looks like, I made experiments in python with the following code (the beginning is directly of out of the original cifar10_cnn.py main file):
 
@@ -597,7 +596,7 @@ channels_last
 
 To complete task 3, I decided to save "oneimage" from the code example above, which should represent in my understanding one exemplary image, into the database, into a table called "input_data". And load it again.
 
-However I did not find a solid way to save the image which is a numpy.ndarray into the table. As far as I understood the resources on the web, a numpy.ndarray can not be saved directly in a field of table. There were some suggestions which sounded rather experimental, and I decided after the direct saving of the oneimage (or testimages[1]) as numpy.ndarray into table caused not surprisingly an error message to just only save the length of this array by using len(testimages[1]). Once a solid convertion method will be found we will use it.
+However, I did not find a solid way to save the image which is a numpy.ndarray into the table. As far as I understood the resources on the web, a numpy.ndarray can not be saved directly in a field of table. There were some suggestions which sounded rather experimental, and I decided after the direct saving of the oneimage (or testimages[1]) as numpy.ndarray into table caused not surprisingly an error message to just only save the length of this array by using len(testimages[1]). Once a solid conversion method will be found we will use it.
 
 All the related files you find in the folder "milestones3task3", in case you executed before the files from task 2, in the postgres folder, make sure to stop and close first all containers, as the same ports might be used. As this task 3 is just an intermediate step with little value for itself, I expect that the folder milestones3task3 will be deleted in the next release.
 
@@ -678,9 +677,9 @@ We can think of the following table attributes that might be useful:
 
 ## Task4
 
-### Multidocker Dontainer Application
+### Multidocker Container Application
 
-***1.) Testing just one image: python function test_one in test modlule***
+***1.) Testing just one image: python function test_one in test module***
 
 
 For testing only one image I wrote a new test-function as our previous function was not suited for that. The new test function of course belongs to the module test.py. I really took an effort to understand the code even better to extract all necessary information: one test image "testData", the according test label "test_label" and a prediction label "pred_label". 
@@ -717,8 +716,8 @@ that took much time was figuring out how to use the data from "predictions". In 
 
 ***2.) Writing a python code***
 
-<u>What does it?</u>
-*This code is creating and training a cnn, testing it and then creating a postgresql database called milestone3 then testing the cnn with one single image again. Then it creates two tables  and insers the testData as label into one table and the prdeicted result as a label in the other one. Then all data is printed.*
+<u> What does it? </u>
+*This code is creating and training a CNN, testing it and then creating a postgresql database called milestone3 then testing the CNN with one single image again. Then it creates two tables and inserts the testData as label into one table and the predicted result as a label in the other one. Then all data is printed.*
 
 I based much of the code on the work of Task 2. 
 
@@ -879,7 +878,7 @@ It is also called ‘zip of death’ or a zip bomb.
 
 Commands used in the research for this task. Saved here for future use: 
 
--  Created a account on docker hub and login in terminal via: 
+-  Created an account on docker hub and login in terminal via: 
 ``docker login`` and credentials
 - shorten command line standard line via `export PS1="\u$ "`
 
@@ -887,7 +886,7 @@ Commands used in the research for this task. Saved here for future use:
 - `docker images` to view all images locally available 
 &#8594; check versions  `-a` for checking all information there is and `-q` for requesting only the image IDs
 - `docker rmi <image_ID>` for deleting a downloaded image
-&#8594; check version  `docker rmi -f <image_ID>` for forcing an image to end and remove
+&#8594; check version  `docker rmi -f <image_ID>` for forcing a image to end and remove
 In case image still doesn't stop use: 
 try executing a shell in the docker container using the command  `docker exec -it imagebase bash` then issuing `kill 1` command.
 - `docker ps` list all running containers 
@@ -899,8 +898,7 @@ try executing a shell in the docker container using the command  `docker exec -i
 - `docker system prune` deletes all stopped containers
 - `docker pull <image_name:version>` to download a docker image and if needed add version number as suggested on docker hub
 - `docker run <image_name>` makes an container out of an image (containers as running instances of docker images) Container then gets listed at ``docker ps``
-- `docker build -t <image_name:tag_name> <location_of_Dockerfile>` to build the image from the Dockerfile or more simple: `docker build .`
+- `docker build -t <image_name:tag_name> <location_of_Dockerfile>` to build the image from the Dockerfile or simpler: `docker build .`
 
 
------
----
+----
