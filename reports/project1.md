@@ -1,6 +1,3 @@
-
-<![endif]-->
-
 # Project Report
 
 ## Milestone 1
@@ -8,8 +5,6 @@
 Group: Adrian Mrozowski & Ludwig Kraft
 
 Date: 16 October 2020
-
-Group: Adrian Mrozowski & Ludwig Kraft
 
 Task 1
 ---------
@@ -195,11 +190,7 @@ Different machine, system operating on Windows, but we also used anaconda naviga
 
 which led to nowhere.
 
-It appears to be difficult to import the package keras as there are several other packages needed to install keras. We followed
-
-http://xperimentallearning.blogspot.com/2019/08/python-install-keras-on-anaconda-in.html
-
-to install the package via the command line.
+It appears to be difficult to import the package keras as there are several other packages needed to install keras. We followed an [online guide](http://xperimentallearning.blogspot.com/2019/08/python-install-keras-on-anaconda-in.html) to install the package via the command line.
 
 We created a conda environment ``conda create --name deeplearning``, activated the environment (activate deeplearning) and installed keras
 
