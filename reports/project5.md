@@ -1,4 +1,3 @@
-﻿
 # Project Report
 
 ## Milestone 5
@@ -170,10 +169,76 @@ We now need to "go live" with our application. We use gunicorn as WSGI Server (r
 
 
 
-
 Task 2
 ---------
+
 ### Implementation
+
+#### First Idea
+
+The first sub-task was once more to understand the instructions of the task. 
+
+As dealing with Flask for educational purpose in Milestone 3 for learning how to the setup the .yml file to use docker-compose is some time in the past already, I refreshed my knowledge quickly with a [great flask tutorial](https://www.youtube.com/watch?v=s_ht4AKnWZg) from a great indian teacher. 
+
+Here I understood the first specification of the task (*"Accept a HTTP POST Request at 'localhost:<port>/predict'"*)
+
+Here the basis on which I started to understand this part: 
+
+    from flask import Flask, jsonify, request
+    
+    app = Flask(__name__)
+    
+    @app.route("/", methods = ["GET", "POST"])
+    def index():
+        if (request.method == "POST"):
+            some_json = request.get_json()
+            return jsonify({"You sent": some_json}), 201
+        else:
+            return jsonify({"about":"Hello World!"})
+    
+    @app.route("/multi/<int:num>", methods =["GET"])
+    def get_multiply10(num):
+        return jsonify({"result": num*10})
+    
+    
+    if __name__ == '__main__':
+        app.run(debug=True)
+
+
+Whenever we will type in the running web browser 
+
+    http://localhost:<port>/predict
+    
+we want to see an image pulled from the Cifar-10 and a label predicted by our CNN.
+
+What's to do? In my own words: 
+We set up a container for the web application with Flask, that has the service 'predict'. This service should load a .h5 model and contain a sample of the dataset. That should be done with an .yml file.
+
+When requested by an extra python script, the container tests the sample with the CNN and stores the image AND the predicted label in a postgresql database, which runs in another container. The image and predicted label should then be printed in the console. 
+
+We need: 
+- .yml file to start Flask (with second service postgres)
+- python code to request sample test.
+
+
+tbc
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
+
+#### Second Idea
+
+Make the overall project run on Colab without minding the virtual environment and docker container. Then dockerize the working code in a second step. 
+
+We based our try and error procedure on the jupiter notebook of our latest Milestone4. Follow along [here](https://colab.research.google.com/drive/1z95gJROm3aU2PaN4z1jZooFMTTbeSMz-?usp=sharing#scrollTo=A0HE4AbMjj0b)
+
+
+
+
+tbc
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
 
 
 
@@ -202,37 +267,5 @@ Task 2
 # THE END 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-----
-
-### Notes: 
-
-Commands used in the research for this task. Saved here for future use: 
-
--  Created a account on docker hub and login in terminal via: 
-``docker login`` and credentials
-- shorten command line standard line via `export PS1="\u$ "`
-
-***docker images***
-- `docker images` to view all images locally available 
-&#8594; check versions  `-a` for checking all information there is and `-q` for requesting only the image IDs
-
------
----
 
 
