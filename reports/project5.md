@@ -46,6 +46,22 @@ Also, Github helps to improve collaboration by avoiding loss of code: Code never
 ![Version Control Systems: Git, SVN, Mercurial, Bazaar](https://webinerds.com/app/uploads/2015/10/A-Brief-Timeline-of-Version-Control-Systems-03-770.png)
 
 
+Additionally, we can talk about an easy-to-use, easy-to-set-up, fast, save and practical communication tool. For this class we were introduced to **Slack**, which met all previously mentioned demands.
+
+![Slack New Logo transparent PNG - StickPNG](https://assets.stickpng.com/images/5cb480b85f1b6d3fbadece78.png)
+
+
+As this question about improvement of team collaboration is asked rather **openly and therefore interpretable**, we want to at least mention some collaboration, soft-skill and leadership based techniques as ...
+
+- setting short-, mid- and longterm goals as well as milestones. Personally as well as for the team.
+- personally formulated motivation letters, on why a person is working at a particular task
+- events for maintaining and improving team spirit and team awareness (admittedly a rather non-pandemic-feature)
+- setting clear, but flat decision hierarchies
+- improving response time on personal requests (obviously well improved in today's age of mobile communication)
+- improving personal communication (how do I communicate such that I cannot be missunderstood by my auditorium; how to give feedback; how to forumlate critics in an appreciating manner)
+- etc...
+
+
 #### <u> How would you assess and ensure the quality of your code?
 <u>**1. Stage:** Does the code work?</u> 
 Run the code and check if everything is at least working properly. If the code does what it is supposed to do, the first assessment step is achieved.
@@ -73,7 +89,9 @@ We implemented the loading of the data in the module 'load_and_test' with the si
     x_train, y_train, x_test, y_test = prepare_data()
 ![Image Classification on CIFAR-10 Dataset · Image Classification](https://rishabhjain.xyz/ml-class-project/public/images/cifar-10.png)
 
+
 We can save the model's performance for multiple input parameters for example by tracking the training und test runs with Weights & Biases.
+
 ![Partner with ODSC West 2019 -old | Open Data Science Conference](https://odsc.com/wp-content/uploads/2019/03/wandb.png)
 
 
