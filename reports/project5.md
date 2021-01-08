@@ -13,6 +13,10 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 To do for final deliverable
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
+- [x] Updated all previous project reports 
+- [ ] Update README
+- [ ] Sort folders
+
 
 Task 1
 ---------
@@ -229,20 +233,67 @@ Whenever we will type in the running web browser
     
 we want to see an image pulled from the Cifar-10 and a label predicted by our CNN.
 
+Therefore we need to define the @app.route "/predict".
+
 What's to do? In my own words: 
-We set up a container for the web application with Flask, that has the service 'predict'. This service should load a .h5 model and contain a sample of the dataset. That should be done with an .yml file.
+We set up a container for the web application with Flask, that has the service 'predict'. This service should load a .h5 model and contain a sample of the dataset. That should be done with an .yml file and a python script.
 
 When requested by an extra python script, the container tests the sample with the CNN and stores the image AND the predicted label in a postgresql database, which runs in another container. The image and predicted label should then be printed in the console. 
 
 We need: 
-- .yml file to start Flask (with second service postgres)
+- .yml file to start Flask (with second service postgres and therefore an postgres_db python script
 - python code to request sample test.
 
 
-tbc
-WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+#### postgres_db.py
 
+    host = "127.0.0.1"
+    database = "milestone5"
+    port = "5005"
+    user = input("Insert a name for your database:") or "postgres"
+    password = input("Insert a password for your database:") or "pgpass"
+    
+    import psycopg2
+    import numpy as np
+    
+    con = psycopg2.connect(dbname=database, user=user, password=password, host=host, port = port)
+    cur = con.cursor()
+    
+    # create input data table
+    cur.execute("CREATE TABLE input_data (ID SERIAL PRIMARY KEY, input_label TEXT, image TEXT);")
+    
+    
+    #train the model and store it
+    #also make it available in this script
+    import main
+    model = main.model
+    
+    #store test data, test label, prediction label
+    from test import test_one
+    test_data, test_label, pred_label = test_one(model)
+    
+    #load testdata into database input_data
+    cur.execute("insert into input_data (ID, input_label, image) values (%s, %s, %s)", (1, test_label, str(test_data)) )
+    
+    
+    #execute query
+    cur.execute("select * from input_data;")
+    image1 = np.fromstring(cur.fetchall()[-1], dtype = int).reshape(32,32,3)
+    print ("These are the inputs that have been tested so far:")
+    print(np.cur.fetchall()[-1], image1)
+    
+    
+    #commit data to db
+    con.commit()
+    
+    con.close()
+
+As the code after some manipulation from the milestone3- version I could erase all errors from the script. A challenge was one, we already faced in Milestone 3. We could not display the image in the database and therefore needed to change the datatype of the image - which is handled as an ndarray. Therefore we want to transfer the image to a string for saving it in the data base and receiving it back from the database as an ndarray again. I tried to solve this as suggested in a feedback to Milestone 3. First convert the image *test_data* to *TEXT* using `` str(test_data) ``. Now it should be possible to save the image as string in the database. 
+However, when we fetch the image (it is the last entry in the row we inserted into the database, therefore ``cur.fetchall()[-1]`` was used), we put the command in the numpy function ``fromstring(...)`` and reshape the object with ``reshape(32,32,3)``, which is the original dimension of the ndarray. 
+
+However, the code still didn't work, because there was no milestone5 database created yet. How do we create a database? I remembered the approach of Milestone3, when we used pgadmin to display the database created with postgres. The question arised, whether we  should use 3 services then (postgres, pgadmin and flask) or whether the database could be displayed in flask either. Advantage of the first case would be that we already have the fitting yml file. This means we only have to include the web service of flask into the old .yml file and somehow connect the first two services to flask.
+
+When trying to set up the new milestone5 database, I again struggled to find a appropriate host name. As it wasn't documented sufficiently in the 3rd report, this took ages and brought no result. Which lead to the fact, that I could not build another postgres database in pgadmin. What isn't there, cannot be connected to flask.. 
 
 #### Second Idea
 
