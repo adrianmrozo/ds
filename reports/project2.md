@@ -2,6 +2,7 @@
 
 ## Milestone 2
 Group: Adrian Mrozowski & Ludwig Kraft
+
 Date:  October 30, 2020
 
 
@@ -12,6 +13,7 @@ Task 1
 
 
 1.) **How to handle the existing branches - master**
+
 We currently have 2 branches, that we treat as master file. The one called "main" is the default branch on github.
 The other one called "master" contains the same information and needs to be set as default.
 Repository Owner needs to follow the few simple steps in [here](https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/changing-the-default-branch).
@@ -25,44 +27,47 @@ Additionally there are two test branches. **testbranch** and **workon**.
 We want to delete the **testbranch** and keep **workon** as a testbranch.
 
 
-***Notes:*** 
+**Notes:**
 Here I keep the most useful commands for handling pulls and pushes, creations and deletions of remote and local branches. This is a small insight into the inputs I've used to complete the task of editing the structure of the git repository.
 
-- ***How to create a new branch and push it to github***
+<u> ***How to create a new branch and push it to github?*** </u>
+
 ```
 $git branch <new_branch_name>
 $git checkout <new_branch_name>
 ```
+
 or both in just one line 
 
 ```
 $ git checkout -b <new_branch_name> 
 ```
+
 followed by
 
 ```
 git push --set-upstream origin <new_branch_name>
 ```
 
-- ***How to delete local branch***
+<u> ***How to delete local branch?*** </u>
 
 ```
 git branch -d <branch_name>
 ```
 
-- ***How to delete remote branch***
+<u> ***How to delete remote branch?*** </u>
 
 ```
 git push origin --delete remoteBranchName
 ```
 
-- ***How to push file into certain remote branch***
+<u> ***How to push file into certain remote branch?*** </u>
 
 ```
 git push origin <remote_branch_name>
 ``` 
 
-- ***How to pull default branch***
+<u> ***How to pull default branch?*** </u>
 
 ```
 git init
@@ -70,12 +75,13 @@ git pull <url_rep>
 ```
 
 
-- ***How to pull just a single branch from github***
+<u> ***How to pull just a single branch from github?*** </u>
  
 ```
 git clone <url_rep> --branch <branchname>
 ```
-***Notes: END*** 
+
+**Notes: END** 
 
 
 3.) **Specification of the .gitignore file**
@@ -89,7 +95,7 @@ Thus, with more and more files/file types to be stored locally and us not wantin
 update the .gitignore file on a regular basis.
 
 In particular: 
-- We ignore the our and all saved and trained CNN. We use: *.h5
+- We ignore our and all saved and trained CNN. We use: *.h5
 - As specifically asked for in the instructions of this project, we want to avoid all pictures, video and music.
 
 We restrict some file types as representatives. We use: 
@@ -111,9 +117,6 @@ In general there was a certain level of confusion for a time as in the local rep
 
 - mind your wd! Before pushing or pulling ensure that you are set in the correct location
 - mind your folder and branch names
-
-
-
 
 5.) ***Version control of the .gitignore - strategy***
 
@@ -158,9 +161,9 @@ Then the file can easily be edited and is also recognized by the ```git status``
 Now the .gitignore file can be edited and then uploaded.
 
 
--------------
 Task 2
 ----------
+
 ### This week's vocabulary
 
 1.) ***What is a hash function? For what is it being used?*** 
@@ -175,7 +178,6 @@ Equal inputs receive the same hash value, whereas each two inequal inputs never 
 Book call number. In a library each book has a unique call number. The call number works like an address of the book within the library. 
 If the same book is displayed multiple times they have the same call number, but to different books never have the same call number. 
 With the book number one can easily navigate through the library and find the book much faster than checking every single book until the desired one is found. 
-
 
 
 2.) ***Difference between python modules, packages and scripts***
@@ -197,7 +199,7 @@ It makes coding and development in python
 - *reusable:* Functionality defined in a single module can be easily reused
 - *scoping:* Modules typically define a separate namespace, which helps avoid collisions between identifiers in different areas of a program.
 
-#### Package:
+#### Packages:
 A package is a collection of python modules or in more detail: This collection is structured as a dictionary with an additional _init_.py file. This _init_.py distinguishes a package from a directory.
 
 When we import a package only the variables/functions/classes in the _init_.py file are visible. Sub-packages or modules are not. 
@@ -247,9 +249,9 @@ imutils has 3348 stars (https://pypi.org/project/imutils/) while paths (https://
 
 
 
---------
 Task 3
 --------- 
+
 ### Updating the code
 
 In Milestone 1 we already accomplished the following tasks, respectively we know that the code has the following functionality:
@@ -270,27 +272,33 @@ Even though we found a command which should run the model on a given dataset, we
 
 
 We tried the provided code by creating a test_network.py file with their code and executing the following command in the terminal:
-`
+
+```
 python3 test_network.py --model keras_cifar10_trained_model.h5 --test-images test_images
-`
+```
 
 Unfortunately in a first try/run the following error message appeared:
-`
-  File "test_network.py", line 5, in <module>
+
+```
+File "test_network.py", line 5, in <module>
     from imutils import paths
 ModuleNotFoundError: No module named 'imutils'
-`
+```
 
 So we had to install the package imutils:
-`
+
+```
 pip3 install imutils
-`
+```
 
 After receiving another error message regarding a missing package, and after some research we also installed the opencv package:
-`
+
+```
 pip3 install opencv-python
-`
+```
+
 We tried to run the code again:
+
 ```
 python3 test_network.py --model keras_cifar10_trained_model.h5 --test-images test_images
 ```
@@ -322,12 +330,12 @@ On our machine all the above pictures were shown. We would also like to highligh
 The images not part of CIFAR-10 were not shown anymore, we think it might be because the website actually asks for 95$ monthly so that one can download the code, so maybe the displayed code on the website was not the entire code. 
 For our purposes to try to run the fitted model on another machine for a first time (even if it is just on testing data as written above), it was sufficient, we managed to fulfill:
 
-****Can perform predictions using a "fitted" model, using Keras****
+#### &rightarrow; Can perform predictions using Keras
 
 
--------------
 Task 4
 -----------
+
 ### Modularization of Python Code 
 
 First we get to know the concept of modularization. 
@@ -354,8 +362,7 @@ Most of those modules contain 2 functions, some only one.
 By rewriting all code into functions that then can be used in the 'main.py`  file, we noticed the utmost importance of checking all variables that are being used in a particular function and also to declare them as variables for the function. 
 
 Otherwise the function would never know, which values should be used. 
-one can run the code easily with the command 
-`python3 main.py`
+one can run the code easily with the command ``python3 main.py``
 
 Of course the modularization did not work initially. After trying to run the modularized code in python, there were several errors, some of them we want to discuss in a quick manner.  
 
@@ -366,7 +373,8 @@ As described in Milestone 1 we always have to set up our python environment prop
 pip3 install keras
 pip3 install tensorflow
 ```
-**Learned:** Whenever necessary, first, set up your python environment before running code.
+
+**Learned:** Whenever necessary: First, set up your python environment before running code.
 
 
 2.) **Several small typing errors** 
@@ -384,6 +392,7 @@ NameError: name 'y_train' is not defined
 So it is easy to find the respective module (here, we import *dataToCategorical* from *prep_cifar10*, thus we check *prep_cifar10* and look there at the function *dataToCategorical*. We noticed that the ":" were missing do well-define the function. 
 
 or: 
+
 ```
 File "main.py", line 59, in <module>
     saveCNN(model, save_dir, model_name, model_path)
@@ -408,26 +417,28 @@ All attempts failed to make the variable created in a function accessable in the
 
 As we wanted to avoid defining variables and allocating objects to them, I tried my luck with object selection:
 
-e.g. in an earlier stage *prepareData()* gave the output ```(x_train, y_train), (x_test, y_test)``` when we needed the *x_train* object again I selected it via ``` prepareData()[0][0] ```.
+e.g. in an earlier stage *prepareData()* gave the output ``(x_train, y_train), (x_test, y_test)`` when we needed the *x_train* object again I selected it via `` prepareData()[0][0] ``.
 
 This enabled me to use the *x_train* object, but also ran the *perpareData()* function again. I re-implemented the Modularization completely new with this method. 
 
 A module in the main file could then look like this:
+
 ```
 from training import train
 train(addModel(setInitials()[1], prepareData()[0][0]), opt(), prepareData()[0][0], prepareData()[1][0])
 ```
-How stupid. 
+
+How stupid!
 
 **The code ran**, but several functions were run multiple times. Python never finished, but the process was *killed* after some running time.
 
 **Huge downside:** like this all print statements were printed in the console and more importantly this took computing power only for the sake of not using variable allocations. 
 Additionally: The code appeared to be very complicated which such a large number of assignments and the style seemed to be far from clean PEP8 implementation. 
 
-This could not be the solution! 
+#### &rightarrow; This could not be the solution! 
 
 
-4.) ***Final approach***
+4.) ***Final and successfull approach***
 
 So I went further and re-thought the limits of definitions and imports. I noticed that defining variables only using functions was still a legitimate approach, which will solve my problem. So instead of only code like 
 `addModel(num_classes, x_train)`
@@ -442,26 +453,32 @@ However, when I ran the main file in Python after some time the process kept on 
 
 For the second problem of the exact spot, where the code was killed, I used a well-known technique to figure out bugs. I added **print statements** inside after every module in the main file. Every short module-note that was printed, signaled me that the module could run without error. 
 I located the training module and the train function as error term. I kept on searching with my exclusion method and ended up at the lines 
+
 ```
  x_train = x_train.astype('float32')
  x_test = x_test.astype('float32')
 ```
 
 I investigated the objects and found that both *x_train* and *x_test* were ndarrays. The *astype()* function is a general function. However, dealing with arrays always screams that working with *numpy* is a good idea. So I tried reformulating the two lines (two examples out of many): 
-`
+
+``
 x_train = numpy.float32(x_train)
-` 
-or 
-`
+``
+
+or
+
+``
 x_train = numpy.x_train.astype('float32')
-`
+``
 
 After too much time of try and error (and only errors) I decided that the problem won't be solved by changing the code.
 
 When searching for reasons why a process was being killed in python, I found the command 
+
 ```
 dmesg -e
 ```
+
 which can be used to confirm whether Linux itself killed the process due to OOM (Out Of Memory, a lack of the systems's memory)
 Lack of memory on my virtual machine appeared to be the problem why the code was always being killed.
 Figuring out this fact cost me some 4h.
@@ -491,6 +508,7 @@ As the complete project code trains the model, which composes of lots of computi
 - Avoid parsing inputs: 
 
 We delete all parsing lines.
+
 ```
  #construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -508,10 +526,13 @@ gtLabels = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "hor
 - load network
 
 We substitute the line 
+
 ```
 model = load_model(args["model"])
 ```
+
 with 
+
 ```
 model_path = os.path.join(save_dir, model_name)
  model = load_model(model_path)
@@ -580,11 +601,8 @@ from test import testing
 testing(model_name, save_dir, batch_size, y_test)
 ```
 
-Whenever we run the load_and_test file with 
-
-`python3 load_and_test.py`
-
-the CNN loads and then classifies a picture as "bird", which is then confirmed to be a bird. Finally, a 32x32 picture of a bird is displayed. However, we have to end the process manually.
+Whenever we run the load_and_test file with ``python3 load_and_test.py`` the CNN loads and then classifies a picture as "bird", which is then confirmed to be a bird. 
+Finally, a 32x32 picture of a bird is displayed. However, we have to end the process manually.
 Still - a success!
 
 
@@ -593,6 +611,7 @@ Still - a success!
 As correct intendations are difficult to repair in the editor, I chose to use Spyder for the task as we have a more automated intendation there and even get the lines displayed, where errors occur. 
 - Kills
 Running the module main once is fine. However, when I want to run it again, the process gets killed. A new start of Ubuntu allows running the module once again. I consider this a problem of a to few memory. 
+
 **Idea:** We could go around this problem by running the script on the server. 
 The same applies for the module load_and_test
 
@@ -600,16 +619,17 @@ The same applies for the module load_and_test
 
 
 
---------- 
 Task 5
 --------- 
-### Virtual Environments and Requirement Files
+
+### Virtual Environments and Requirement File
 
 We installed successfully virtualenv with the below command as this was the first step in an instruction we found online (we encountered a challenge here, as the first instruction to install did not work, the command was `apt-get install python-virtualenv` and the following error message appeared: 
 
 ```
 E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied) E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
 ```
+
 A second instruction that we found suggested to use `sudo apt install python3-ven`. As we did not want to use any sudo commands, we looked further and found the below command (that worked):
 `pip3 install virtualenv`
 
@@ -617,11 +637,13 @@ Next we executed the below command, according to the instruction the following h
 Creates a folder that houses the necessary Python executables in the bin directory. 
 In this instance, we are installing Python 3.5 while also creating two folders, the virtualenvironment, and project_1 directory. 
 Virtualenv will create the necessary directories in the project_1 directory. In this directory you’ll find bin, include, lib, local and share.
+
 ```
 virtualenv -p /usr/bin/python3 virtualenvironment/project_1
 ```
 
 Next moved to the bin folder:
+
 ```
 ls
 cd virtualenvironment
@@ -629,27 +651,23 @@ cd project_1
 cd bin
 ```
 
-With the following command we noticed as announced in the instruction a change in the terminal, every line started now with (project_1):
+With the following command we noticed as announced in the instruction a change in the terminal, every line started now with (project_1): ``source activate``
 
-``source activate``
-
-With the following command one can exit again the virtual environment:
-
-``deactivate``
+With the following command one can exit again the virtual environment: ``deactivate``
 
 Next we decided to test this virtualenvironment out by cloning our files from our github repository with the following command:
 
-``
+```
 git clone https://github.com/adrianmrozo/ds.git
-``
+```
 
-Which worked. 
+Which worked. Then.
 
 ``
 git switch workon
 ``
 
-Next we tried to run the code, which should not work, as we did not yet install any packages in the virtual environment:
+To switch to the desired branch. Next we tried to run the code. Now it should not work, as we did not yet install any packages in the virtual environment:
 
 ``
 python3 cifar10_cnn.py
@@ -657,11 +675,12 @@ python3 cifar10_cnn.py
 
 As anticipated, it did not work. Next we tried the following command to install the needed packages by using the requirements.txt file, as to an instruction we found online:
 
-``
+```
 pip install -r requirements.txt
-``
+```
 
 The installations were processed, however these error messages were shown:
+
 ```
 ERROR: After October 2020 you may experience errors when installing or updating packages. This is because pip will change the way that it resolves dependency conflicts.
 
@@ -677,6 +696,7 @@ Successfully installed absl-py-0.11.0 astunparse-1.6.3 cachetools-4.1.1 certifi-
 ```
 
 As it confirmed that keras 2.4.3 and tensorflow 2.3.1 were installed, we decided to try to run our code again:
+
 ```
 python3 cifar10_cnn.py
 ```
@@ -697,10 +717,10 @@ And we were able to run our code in the virtual environment with only 2 command 
 
 
 
-
------------
 Task 6: 
 -----------
+
+### Introduction to Docker
 
 1.) **Install docker:**
 
@@ -790,13 +810,16 @@ docker run hello-world
 Next we have followed the Docker instruction "Get started with Docker Compose" (see https://docs.docker.com/compose/gettingstarted/)
 
 
-Step 1: Setup
+<u> Step 1: Setup </u>
+
 ```
-    $ mkdir composetest
-    $ cd composetest
+$ mkdir composetest
+$ cd composetest
 ```
+
 This folder we have just used in the beginning for test purposes, later we transferred the files directly into the main folder.
 We created a file called app.py in your project directory and pasted this in:
+
 ```
     import time
 
@@ -826,6 +849,7 @@ We created a file called app.py in your project directory and pasted this in:
 (In this example, redis is the hostname of the redis container on the application’s network. We use as in the instruction the default port for Redis, 6379.)
 
 As in the instruction we created another requirements.txt in your test and paste this in:
+
 ```
     flask
     redis
@@ -833,7 +857,7 @@ As in the instruction we created another requirements.txt in your test and paste
 
 (We later added below the merged this requirements with our already existing requirements file)
 
-Step 2: Create a Dockerfile
+<u> Step 2: Create a Dockerfile </u>
 
 In this step, we wrote a Dockerfile that builds a Docker image. The image contains all the dependencies the Python application requires, including Python itself.
 
@@ -879,9 +903,10 @@ CMD ["flask", "run"]
 
 For more information on how to write Dockerfiles, see the Docker user guide and the Dockerfile reference.
 
-Step 3: Define services in a Compose file
+<u> Step 3: Define services in a Compose file </u>
 
 We created as written in the instruction a file called docker-compose.yml in your project directory and paste the following:
+
 ```
 version: "3.8"
 services:
@@ -892,6 +917,7 @@ services:
   redis:
     image: "redis:alpine"
 ```
+
 This Compose file defines two services: web and redis.
 Web service
 
@@ -900,11 +926,12 @@ Redis service
 
 The redis service uses a public Redis image pulled from the Docker Hub registry.
 
-Step 4: Build and run your app with Compose
+<u> Step 4: Build and run your app with Compose </u>
 
  From our test directory, we started up your application by running docker-compose up.
+ 
 ```
-    $ docker-compose up
+$ docker-compose up
 ```
 Compose pulls a Redis image, builds an image for the code, and starts the services you defined. In this case, the code is statically copied into the image at build time.
 
@@ -922,7 +949,7 @@ With refreshing the page, the number should increment.
 
     hello world in browser
 
-Step 5: Edit the Compose file to add a bind mount
+<u> Step 5: Edit the Compose file to add a bind mount </u>
 
 Edit docker-compose.yml in your project directory to add a bind mount for the web service:
 
@@ -943,32 +970,38 @@ services:
 The new volumes key mounts the project directory (current directory) on the host to /code inside the container, allowing you to modify the code on the fly, without having to rebuild the image. The environment key sets the FLASK_ENV environment variable, which tells flask run to run in development mode and reload the code on change. This mode should only be used in development.
 
 
-Step 6: Update the application
+<u> Step 6: Update the application </u>
 
 Because the application code is now mounted into the container using a volume, we can make changes to its code and see the changes instantly, without having to rebuild the image.
 
 For example, we changed the Hello World! message to Hello from User!:
+
 ```
 return 'Hello from User! I have been seen {} times.\n'.format(count)
 ```
+
 We closed it again with the following comand:
+
 ```
 $ docker-compose down --volumes
 ```
 
 As this worked now, we started to try out our code with docker with the:
+
 ```
 docker exec [containerID] python3 [ourfilename]
 ```
-command.
-It took us quite some time and error messages, until we realized that I have to set the Python version in Docker according to our requirement in our README.md file, see above. 
+
+command. It took us quite some time and error messages, until we realized that I have to set the Python version in Docker according to our requirement in our README.md file, see above. 
 
 We also realised that we again needed additional packages, which was more obvious to us, and it worked to install them on Docker and even add them into the requirements.txt file which will be automatically loaded and installed once a docker-compose up is executed.
 
 While the standard CIFAR10 code was running in Docker once the Python version was correct and all the Python packages installed, our modified and modulized code that also was loading and testing the model was not working. After some research of the error message we had to execute the following commands in our Docker, and install 2 more packages manually (but which we added to the requirements.txt file)
+
+```
 docker exec f26f900647a3 apt-get update
 docker exec f26f900647a3 apt-get install libgl1-mesa-glx libjpeg62
-
+```
 
 
 
