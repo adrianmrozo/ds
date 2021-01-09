@@ -8,7 +8,6 @@ Date:  January 9, 2021
 
 Task 0
 ---------
-
 ### Clean up & catch up
 
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
@@ -22,7 +21,6 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
 Task 1
 ---------
-
 ### How to ... build a data-driven product?
  
 #### <u> How can you train a predictive model? How could you manage experiments, and create reports/visualizations while training your model?
@@ -166,7 +164,6 @@ $Accuracy=97.75\%$
 $Precision=97.04\%$
 $Recall=98.5\%$
 
-
 These were pretty good values. Thinking about how to rate the performence of the model, it is obvious that the Accuracy is paramount. A higher number of correctly classified cases is better than less. 
 However, to examine the model even closer we ask, whether it is more important to not lose Hams to the Spam (which means, good mails are incorrectly classified as Spam, which is a prosa description of Precision) or whether it is more important not to receive incorrectly Ham classified Spam mails, which is expressed by the Recall). 
 
@@ -266,6 +263,8 @@ As stated above, we need to define the route /predict and the service should con
         app.run(debug=True)
 
 
+Open questions: 
+How can we load the model and a sample picture to send it to the database in the predict-body?
 
 #### The postgres_db Script
 
@@ -326,13 +325,123 @@ When trying to set up the new milestone5 database, I again struggled to find a a
 #### The .yml file 
 
 I first tried to set up the database by using the old two .yml files. One for postgres one for pgadmin as in Milestone3. It did not work out as described above. 
-After some hours mourning the wasted time, I tried another approach. Copy together all three services (web(flask), pgadmin, postgres) in one .yml file. 
-When trying to run it, there occured several PermissionErrors, that it wasn't possible to access a saved model. First idea: The model isn't getting saved in the container, but rather locally. Thus we need to install an appropriate docker volume.  
+After some hours mourning the wasted time, I tried another approach. Copy together all three services (web(flask), pgadmin, postgres) in one .yml file. This resulted in the following: 
+
+    version: '3'
+    services:
+    
+      postgres:
+        image: postgres:12.4-alpine
+    
+        # Expose the default Postgres port on localhost
+        ports:
+          - '5431:5432'
+        network_mode: 'bridge'
+        container_name: 'postgres'
+    
+        environment:
+          POSTGRES_USER: 'postgres'
+          POSTGRES_PASSWORD: 'pgpass'
+          POSTGRES_DB: 'milestone3'
+    
+        # Copy files from dbinit into the image so that they will be run on boot
+        volumes:
+          - ./initdb:/docker-entrypoint-initdb.d
+          - ./saved_models:/var/lib/postgresql/data
+     
+      pgadmin:
+        image: dpage/pgadmin4
+    
+        # Expose the web UI on localhost port 8080
+        ports:
+          - '8086:80'
+        network_mode: bridge
+        container_name: 'pgadmin'
+    
+        # Link this container to the postgres container with hostname 'postgres'
+        external_links:
+          - postgres:postgres
+    
+        environment:
+          PGADMIN_DEFAULT_EMAIL: 'admin@example.com'
+          PGADMIN_DEFAULT_PASSWORD: 'admin'
+          
+      web:
+        build: .
+        ports:
+          - "5000:5000"
+        volumes:
+          - .:/code
+        environment:
+          FLASK_ENV: development
+        
+      
+When trying to run it, there occured several PermissionErrors, that it wasn't possible to access a saved model. First idea: The model does not save the model in the container, but rather locally. Thus we need to install an appropriate docker volume.  
 
 **Note:** Right after I received the Permission Error I checked if, it was possible to go into the saved_models folder. It was possible. However, it asked for authorisation. Right after that it was not possible anymore to make a single operation in the folder environment of my milestone5 development. Every moving forward or backward in the folder hierarchie, opening a file, etc. was accompanied by an authority request, where I had to enter my VirtualMachine password. This made working very unproductive and could only be resolved by restarting the computer and deleting all compromised files. 
 
 **Problem at this point:**
 The .yml file does not run and the postgres script can therefore not connect to the database.
+
+The PermissionError could finally be avoided by copying all scripts into another folder and running the yml file from there. 
+However I was faced with an IntendError, which made no sense at all. 
+
+I noticed that the flask service will this time replace the pgadmin from last time. So I took the external links to postgres and copied them into the web service. Then pgadmin could be deleted entirely. 
+
+Update: When running the yml file we continue getting a PermissionError. That means the CNN is either not getting saved sufficiently or a volume is not working.
+
+**Note:** 
+Generally speaking we should have all parts together already. We have an algorithm to train and save the CNN. We have a postgres database where we already tested one instance and returned the result. And we have the flask web service. However, putting everything together, remains tricky.
+
+<u> **Problems solved:**
+- <u> model not available in app.py </u>
+Solution: import only model via ``from main import model``
+Learning: With the *import* command we can not only import functions, but also variables from other python modules. Very important to know!  
+
+- <u> Define correct app route: </u>
+All the time our Flask app wasn't coded sufficiently. We came up with this: 
+
+```
+# flask_ngrok_example.py
+from flask import Flask
+from flask_ngrok import run_with_ngrok
+from test import test_one
+from main import model
+
+app = Flask(__name__)
+run_with_ngrok(app)  # Start ngrok when app is run
+
+
+testData, test_label, pred_label, number = test_one(model)
+
+
+
+@app.route("/")
+def welcome():
+    output = "<h1>Welcome!</h1><br>Please add '/predict' to your browser line to see a test sample."
+    return output
+    
+
+@app.route("/predict")
+def predict():
+    output = "<h1>Welcome!</h1><br>Please find below an overview of the testing.<br><br>You have selected the following image number out of the CIFAR 10 test dataset: " + str(number) + "<br><br>Please add in your browser URL '/yourimage' to see your test image, out of the CIFAR 10 test dataset." + "<br><br>The model predicted the following category of the picture: " + str(pred_label) + "<br><br>The following category is the correct one: " + str(test_label)
+    return output
+    
+
+from flask import send_file
+
+@app.route('/predict/yourimage')
+def get_image():
+    filename = 'test.png'
+    return send_file(filename, mimetype='image/png')
+
+if __name__ == '__main__':
+    app.run()
+```
+
+Now, when we run the app module in python, we are provided with a link to port 5000 (specified in the .yml file). There we can choose the browserline extension */predict* and */predict/yourimage*. As demanded we receive a prediction of a sample picture. 
+
+### DONE! 
 
 
 
@@ -343,6 +452,7 @@ The .yml file does not run and the postgres script can therefore not connect to 
 Our team divided work for task 2 as we had another approach from the beginning as well: First, make the overall project run on Colab without minding the virtual environment and docker container. Then dockerize the working code in a second step. 
 
 We based our try and error procedure on the jupiter notebook of our notebook from Milestone4. Follow along [here](https://colab.research.google.com/drive/1z95gJROm3aU2PaN4z1jZooFMTTbeSMz-?usp=sharing#scrollTo=A0HE4AbMjj0b).
+
 
 
 
