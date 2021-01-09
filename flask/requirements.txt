@@ -7,5 +7,5 @@ psycopg2 == 2.8.6
 matplotlib == 3.3.3
 random == 3.9
 os == 3.9
-flask = 1.1.2
+flask == 1.1.2
 
