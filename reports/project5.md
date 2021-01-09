@@ -454,20 +454,29 @@ Our team divided work for task 2 as we had another approach from the beginning a
 We based our try and error procedure on the jupiter notebook of our notebook from Milestone4. Follow along [here](https://colab.research.google.com/drive/1z95gJROm3aU2PaN4z1jZooFMTTbeSMz-?usp=sharing#scrollTo=A0HE4AbMjj0b).
 
 
+First of all, as the user should see the image that will be tested, and this was up until now one of the more challenging problems, I used the Google Colab I created from the previous milestone (again credits to Priyanka Mohandas, https://github.com/pranka02/nn_CIFAR10).
 
+To have all functionalities included in the Google Colab I also searched for code that creates PostgreSQL databases within Google Colab. After I found a very simple code, that in some ways was to simple for our purposes, as it did not create yet an actual database, I looked further and found a very extensive example, that copied an entire database from an external source into a newly created PostreSQL database in Google Colab. I shortened the code, so that simply the database was created.
 
+Next chapter "Train & save a model, splitted up", this is the code closest the original code we were provided with in the very beginning, that is loading the CIFAR-10 dataset and training and saving the model.
 
+I splitted the code slightly up, so that it is more digestable.
 
+Next I used Ludwigs modularized code, that he has done in earlier milestones, and I just took the modules that would be useful for our case, to predict the one image.
 
+Ludwig wrote the code that predicts the category of our one sample image.
 
+I again used code from the earlier milestones and slightly adjusted it to the parameters of the earlier created database, so that the prediction will be saved accordingly.
 
+I used an example for flask, and after researching how flask works, I modified it for our needs. I researched that you should actually create a seperate HTML file or template, however as we just have a few results that we would like to present, I decided to keep it as simple as possible, and to code the html output in our flask code.
 
+Even though we did not use this Google Colab file directly in our deliverables, it was very helpful as a basis to write our actual .py code. As we saw a working code and testing of new lines of codes could be done very quickly one Google Colab and also collaborating on the same code worked very well on Google Colab.
 
+I have two more Google Colab files, one were most of the original code is still available (link on request), and one were I reduced all the code into one text, so that I could be direclty used to for task 2 as an alternative option, in case our code would not be running. The link to this shortened version of the code one can find here: https://colab.research.google.com/drive/107EAwQZrZhcje8YA1fyrosLlu_L5PCUz?usp=sharing
 
+Our focus was always to realize actual useful functionalities in a first step, and try in second step to fullfill the technical aspects and deliverables. The deliverables that were not fulfilled with this hand-in I (Adrian Mrozowski) will try to fulfill in the final submission.
 
-
-
-
+Personal reflections: It is very interesting how we get step by step from a basic code, to a software that has more functionalities and is easier accessible for every day users, for example to see how a Neural Network is predicting what certain images contain.
 
 
 -----
