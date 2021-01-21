@@ -1,6 +1,5 @@
-from imutils import paths
+
 import numpy as np
-import imutils
 import keras
 from keras.datasets import cifar10
 from keras.preprocessing.image import ImageDataGenerator
