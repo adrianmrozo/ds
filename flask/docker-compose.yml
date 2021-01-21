@@ -12,7 +12,7 @@ services:
     volumes:
       - .:/code
     environment:
-      FLASK_ENV: development
+      FLASK_ENV: production
       
   postgres:
     image: postgres:12.4-alpine
