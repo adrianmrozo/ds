@@ -2,10 +2,11 @@
 #from __future__ import print_function
 from keras.models import load_model
 from keras.datasets import cifar10
+from imutils import paths
 import numpy as np
+import imutils
+#import cv2
 import os
-import matplotlib.pyplot as plt
-from random import randint
  
 def testing(model_name, save_dir, batch_size, y_test):
 
@@ -63,15 +64,5 @@ def test_one(model):
  for (i, prediction) in enumerate(predictions):
   pred_label=gtLabels[prediction]
   test_label=gtLabels[testLabels[i]] 
- 
- plt.imshow(testData[0])
- plt.imsave('test.png', testData[0])
 	 
- return testData, test_label, pred_label, idxs[0]
-
- 
- 
-
-
-
-
+ return testData, test_label, pred_label 

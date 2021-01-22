@@ -1,0 +1,38 @@
+version: '3'
+services:
+      
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+      
+    # Link this container to the postgres container with hostname 'postgres'
+    external_links:
+      - postgres:postgres
+    volumes:
+      - .:/code
+    environment:
+      FLASK_ENV: production
+      
+  postgres:
+    image: postgres:12.4-alpine
+
+    # Expose the default Postgres port on localhost
+    ports:
+      - '5431:5432'
+    network_mode: 'bridge'
+    container_name: 'postgres'
+
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'pgpass'
+      POSTGRES_DB: 'milestone5'
+
+    # Copy files from dbinit into the image so that they will be run on boot
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
+      - ./saved_models:/var/lib/postgresql/data
+    
+      
+
+

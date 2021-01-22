@@ -13,7 +13,10 @@ from keras.models import load_model
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 
+#from imutils import paths
 import numpy as np
+#import imutils
+#import cv2
 import os
 
 
@@ -65,12 +68,12 @@ model, model_path = save_cnn(model, save_dir, model_name)
 from output import cnn_stats
 model = cnn_stats(model, model_path, x_test, y_test)
 
+
 #module 6
 # load and test
 
 from test import testing
 testing(model_name, save_dir, batch_size, y_test)
-
 
 
 #####################################
