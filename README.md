@@ -1,4 +1,4 @@
-# A Demonstration of Data Science Toolkits and Architectures - Image recognition with Keras & Tensorflow on the CIFAR-10 data
+# A Demonstration of Data Science Toolkits and Architectures - Image recognition with Keras & Tensorflow on the CIFAR-10 dataset
 by Ludwig Kraft & Adrian Mrozowski
 
 ## Description: 
@@ -59,9 +59,9 @@ docker-compose up
 ```
 And everything should run by itself.
 
-**If you have experience in Python:**
+**If you have experience in Python [not recommended]:**
 
-You can install the required packages out of requirements.txt file and try to run app.py in the "src" folder.
+You can install the required packages out of requirements.txt file and try to run app.py in the "src" folder [not recommended, as not sufficiently tested and it was not optimized towards this usage, there too many dependencies regarding the packages.]
 
 
 ## Additional functionalities:
