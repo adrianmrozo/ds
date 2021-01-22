@@ -1,77 +1,108 @@
-# Project name: DS Ludwig & Adrian
+#A Demonstration of Data Science Toolkits and Architectures
+#Specifically image recognition with Keras & Tensorflow on the CIFAR-10 data
+##by Ludwig Kraft & Adrian Mrozowski
 
 ## Description: 
 
-**This repository will lead us and the visitor through several data science toolkits and architectures**
+**This repository will demonstrate the capabilities of machine learning and image recognition**
 
-
-It starts the following code:
-https://github.com/keras-team/keras/blob/master/examples/cifar10_cnn.py
-
-Please find it's dataset and more background information about it here:
+This repository is based on a code from the Keras Team (https://github.com/keras-team) which displayed machine learning functionalities based on the CIFAR-10 dataset.
+It is a dataset of 60000 32x32 colour images of 10 different categories.
+The 10 categories are: airplane, automobile, bird, cat, deer, dog, frog, horse, ship & truck.
+The code is first training a neural network with the 50000 pictures.
+The other 10000 pictures can be used to see how well the model is performing.
+You can find more background information about the dataset here:
 https://www.cs.toronto.edu/~kriz/cifar.html
+
+Please find also here our Google Colab file, that demonstrates the dataset and also the code that trains the model:
+https://colab.research.google.com/drive/1z95gJROm3aU2PaN4z1jZooFMTTbeSMz-?usp=sharing
+
+Please note that we have set the training epochs to 1, so that it is possible for the user to have within a good time period a first demonstration of the results.
+And even to training 1 epoch can take up to 10 minutes, so if something does not display, it's well possible that the model is still training.
+If you like to have a better model, you can take this code and change the number of epochs
 
 
 ## Installation:
 
-Please find below steps on how to make the code run. As it has some dependancies, the best way to make it run is to make sure to fulfill the requirements.
-### Mandatory requirements:
-- **Python** (version 3.8.3 recommended)
-- *Python packages (if not installed yet, see instructions below):*
-    - **Keras**: (version 2.4.3 recommended, 
-    - **Tensorflow** (version 2.3.1 recommmended)
-    - flask
-	- redis
-	- imutils
-	- opencv-python
+**If you do not have any experience in Docker and/or Python:**
 
-### Strongly recommended:
-- OS: **Ubuntu** 20.04.1 LTS
+We tried to make it as simple as possible for the end user, if you never used Docker before, we strongly
+recommend to use the following site:
 
-*Alternatively:*
-- OS: **Windows 10**
-- **Anaconda Navigator** 4.8.3
+https://labs.play-with-docker.com/
 
-***Remark and reasons for our strongly recommended software***: *We have tested this code successfully in an Ubuntu environment. In other environments first it was not possible for us to run the code. We therefore recommend strongly to also use this software, ideally even the same versions we used, see above.*	
+You have to register (it's free and quite easy) and afterwards you can open a terminal.
 
-**If you are sure that you fulfill the above requirements, you can try to directly run the code.**
+You can enter the following commands:
 
-Otherwise make sure that you first install Ubuntu (Operating System) and the below two two Python packages, the below is a summarized overview, the detailled step by step, command by command sintructions you will find further below:
-1. Install tensorflow package
-2. Install keras package
-3. **You can now run the code.** *Please be aware that the code can run & train the model for hours. To test out if the code is running within a shorter time frame, you can reduce the epochs from 100 to 3 in line 18, from*
-```sh
-epochs = 100
-```
-to
-```sh
-epochs = 3
-```
+'''
+git clone https://github.com/adrianmrozo/ds
+cd ds
+docker-compose up
+'''
 
-### Step by step, command by command instructions
+The 3 above commands do the following 
+1. You are cloning or copying this Github repository into the website "play with docker"
+2. You are entering the folder "ds"
+3. You are starting the prepared docker instructions by us, and our code will start to run
 
-Below a working step by step, Ubuntu terminal command by command instruction how to run the code successfully after downloading the **cifar10_cnn.py** file, the personal folder structure is just partly shown, generally the commands start after "$ ":
+Next the model will train, and after the training is done (up to 10 minutes) you should be able to access the website with the prediction.
+Click on the port numbers on the right side next to "Open Port".
 
-```sh
-~$ sudo apt update
-~$ sudo apt install git
-~$ cd ds
-~/ds$ git init
-~/ds$ git pull https://github.com/adrianmrozo/ds.git
-~/ds$ cd ..
-~$ cd ..
-/home$ cd ..
-/$ cd ..
-/$ pip3 install keras
-/$ pip3 install tensorflow
-```
-*go back into your local repository again, with the "cd" command (use "ls" for orientation), until you're back were the file cifar10_cnn.py is located and type:*
-```sh
-~/ds$ python3 cifar10_cnn.py
-```
-*Et voilà! It should be running. In case you would like to reduce the processing time, you can reduce the amount of epochs as described above.*
+If for some reason the browser will display:
+"This page isn’t working", just refresh/reopen it again, so that you see "Welcome!"
 
-## More detailled description
+
+**If you have Docker already installed**
+
+You can open in your terminal the "ds" folder, and enter the command:
+'''
+docker-compose up
+'''
+
+**If you have experience in Python**
+
+You can install the packages out of requirements.txt file and try to run app.py in the src folder.
+
+
+## Technical descriptions
+
+
+### Table of all packages including hashes
+
+numpy == 1.18.5 \
+    --hash=sha256:4674f7d27a6c1c52a4d1aa5f0881f1eff840d2206989bae6acb1c7668c02ebfb
+
+imutils==0.5.3 \
+    --hash=sha256:857af6169d90e4a0a814130b9b107f5d611150ce440107e1c1233521c6fb1e2b
+
+keras==2.4.3 \
+    --hash=sha256:05e2faf6885f7899482a7d18fc00ba9655fe2c9296a35ad96949a07a9c27d1bb
+
+tensorflow==2.3.1 \
+    --hash=sha256:87750a476aa6f76b3aad5e6182faf2a3036a3d4c0db3b6d7463ebbaf4b184a23
+
+h5py==2.10.0 \
+    --hash=sha256:d35f7a3a6cefec82bfdad2785e78359a0e6a5fbb3f605dd5623ce88082ccd681
+
+psycopg2 == 2.8.6 \
+    --hash=sha256:fb23f6c71107c37fd667cb4ea363ddeb936b348bbd6449278eb92c189699f543
+
+matplotlib==3.3.3 \
+    --hash=sha256:83e6c895d93fdf93eeff1a21ee96778ba65ef258e5d284160f7c628fee40c38f
+
+flask==1.1.2 \
+    --hash=sha256:8a4fdd8936eba2512e9c85df320a37e694c93945b33ef33c89946a340a238557
+
+flask-ngrok==0.0.25 \
+    --hash=sha256:724519a4dd3a2d374af50d4c0c21a26548737de0cf23f68dfb8d3b31c7311e93
+
+random2==1.0.1 \
+    --hash=sha256:34ad30aac341039872401595df9ab2c9dc36d0b7c077db1cea9ade430ed1c007
+
+astunparse==1.6.3 \
+    --hash=sha256:c2652417f2c8b5bb325c885ae329bdf3f86424075c4fd1a128674bc6fba4b8e8
+
 
 ### In- and Output
 
@@ -102,12 +133,7 @@ Keras is a high-level Python neural networks library that runs on top of either 
 Keras is a neural network library while TensorFlow is the open-source library for a number of various tasks in machine learning. Keras acts as an interface for the TensorFlow library.
 
 ##### How is the data loaded?
-The data is being loaded with the following two lines of code:
-```sh
-from keras.datasets import cifar10
-(x_train, y_train), (x_test, y_test) = cifar10.load_data()
-```
-Then automatically the model downloads data from https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz, which is the CIFAR-10 dataset discussed above.
+The  the code downloads data from https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz, which is the CIFAR-10 dataset discussed above.
 
 ##### Which dependencies are imported?
 Tensorflow: 2.3.1
