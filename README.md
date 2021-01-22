@@ -69,10 +69,10 @@ You can install the required packages out of requirements.txt file and try to ru
 This code is also starting a PostgreSQL database, and saves results out of the testing into the database.
 
 
-### Additional information:
+## Additional information:
 
 This code is the end product from several milestones, containing again several sub tasks.
-You can the report to each milestone in the "reports" folder and code completing the sub tasks in the "folder /src/legacy".
+You can find the reports to each milestone in the "reports" folder and code completing the sub tasks in the folder "/src/legacy".
 
 
 ## Technical descriptions:
