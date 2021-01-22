@@ -1,12 +1,11 @@
-#A Demonstration of Data Science Toolkits and Architectures
-#Specifically image recognition with Keras & Tensorflow on the CIFAR-10 data
-##by Ludwig Kraft & Adrian Mrozowski
+# A Demonstration of Data Science Toolkits and Architectures - Image recognition with Keras & Tensorflow on the CIFAR-10 data
+by Ludwig Kraft & Adrian Mrozowski
 
 ## Description: 
 
 **This repository will demonstrate the capabilities of machine learning and image recognition**
 
-This repository is based on a code from the Keras Team (https://github.com/keras-team) which displayed machine learning functionalities based on the CIFAR-10 dataset.
+This repository is based on a code from the Keras Team (https://github.com/keras-team) which demonstrates machine learning functionalities based on the CIFAR-10 dataset.
 It is a dataset of 60000 32x32 colour images of 10 different categories.
 The 10 categories are: airplane, automobile, bird, cat, deer, dog, frog, horse, ship & truck.
 The code is first training a neural network with the 50000 pictures.
@@ -19,15 +18,14 @@ https://colab.research.google.com/drive/1z95gJROm3aU2PaN4z1jZooFMTTbeSMz-?usp=sh
 
 Please note that we have set the training epochs to 1, so that it is possible for the user to have within a good time period a first demonstration of the results.
 And even to training 1 epoch can take up to 10 minutes, so if something does not display, it's well possible that the model is still training.
-If you like to have a better model, you can take this code and change the number of epochs
+If you like to have a better model, you can take this code and change the number of epochs, the training time will increase accordingly.
 
 
 ## Installation:
 
 **If you do not have any experience in Docker and/or Python:**
 
-We tried to make it as simple as possible for the end user, if you never used Docker before, we strongly
-recommend to use the following site:
+We tried to make it as simple as possible for the end user, if you never used Docker before, we strongly recommend to use the following site:
 
 https://labs.play-with-docker.com/
 
@@ -35,14 +33,14 @@ You have to register (it's free and quite easy) and afterwards you can open a te
 
 You can enter the following commands:
 
-'''
+```
 git clone https://github.com/adrianmrozo/ds
 cd ds
 docker-compose up
-'''
+```
 
 The 3 above commands do the following 
-1. You are cloning or copying this Github repository into the website "play with docker"
+1. You are cloning/copying this Github repository into the website "play with docker"
 2. You are entering the folder "ds"
 3. You are starting the prepared docker instructions by us, and our code will start to run
 
@@ -53,19 +51,31 @@ If for some reason the browser will display:
 "This page isn’t working", just refresh/reopen it again, so that you see "Welcome!"
 
 
-**If you have Docker already installed**
+**If you have Docker already installed:**
 
 You can open in your terminal the "ds" folder, and enter the command:
-'''
+```
 docker-compose up
-'''
+```
+And everything should run by itself.
 
-**If you have experience in Python**
+**If you have experience in Python:**
 
-You can install the packages out of requirements.txt file and try to run app.py in the src folder.
+You can install the required packages out of requirements.txt file and try to run app.py in the "src" folder.
 
 
-## Technical descriptions
+## Additional functionalities:
+
+This code is also starting a PostgreSQL database, and saves results out of the testing into the database.
+
+
+### Additional information:
+
+This code is the end product from several milestones, containing again several sub tasks.
+You can the report to each milestone in the "reports" folder and code completing the sub tasks in the "folder /src/legacy".
+
+
+## Technical descriptions:
 
 
 ### Table of all packages including hashes
@@ -111,11 +121,7 @@ We feed the Neural Network with a dataset - the CIFAR-10 dataset, which is a lar
 There exist training and test cases within the dataset.
 
 ***Output:*** 
-*4 pieces of information*
- - a trained CNN
-- the location of the saved and trained Neural Network model
-- test loss. A numeric value ,which gives the mean of the squared error of classified cases
-- test accuracy. A numeric valie, which gives the number in % of correctly classified images of the test cases using the trained Neural Network.
+- a trained Convolutional Neural Network
 
 ### Dataset:
 We observe two datasets build by Alex Krizhevsky, Vinod Nair and Geoffrey Hinton consisting of millions of tiny color images from the web.
@@ -134,13 +140,6 @@ Keras is a neural network library while TensorFlow is the open-source library fo
 
 ##### How is the data loaded?
 The  the code downloads data from https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz, which is the CIFAR-10 dataset discussed above.
-
-##### Which dependencies are imported?
-Tensorflow: 2.3.1
-Keras: 2.4.3
-
-##### Type of neural network architecture used: 
-CNNs (Convolutional Neural Network)
 
 ## Credits: 
 Special credits to Sandro & Arthur
