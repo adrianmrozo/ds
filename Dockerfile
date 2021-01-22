@@ -12,7 +12,7 @@ COPY /src/test.py .
 COPY /src/training.py .
 COPY requirements.txt .
 COPY /src/postgres_db.py .
-COPY /src/app.py .
+COPY app.py .
 
 RUN pip install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements.txt
