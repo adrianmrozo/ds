@@ -6,19 +6,6 @@ Group: Adrian Mrozowski & Ludwig Kraft
 Date:  January 9, 2021
 
 
-Task 0
----------
-### Clean up & catch up
-
-WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-To do for final deliverable
-WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-
-- [x] Updated all previous project reports 
-- [ ] Update README
-- [ ] Sort folders
-
-
 Task 1
 ---------
 ### How to ... build a data-driven product?
