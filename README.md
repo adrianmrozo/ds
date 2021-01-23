@@ -40,11 +40,11 @@ The 3 above commands do the following:
 2.  Enters the folder "ds"
 3. Starts the prepared docker instructions, makes the code run
 
-Then the CNN is trained and after completion (up to 10 minutes) the user can access a flask provided in port website to the prediction.
-Click on the port numbers on the right side next to "Open Port".
+Then the CNN is trained and after completion (up to 10 minutes) the user can access a flask provided web service to check the prediction.
+Click on the port number *5000* on the right next to "Open Port".
 
 In case the browser returns an error - "This page isn’t working" - just refresh/reopen the window.
-The user gets to the welcome page.
+The user gets to the welcome page. Follow instructions from there.
 
 
 
