@@ -1,5 +1,3 @@
-# Source: https://gurus.pyimagesearch.com/lesson-sample-running-a-pre-trained-network/#. Import the necessary packages
-#from __future__ import print_function
 from keras.models import load_model
 from keras.datasets import cifar10
 import numpy as np
@@ -38,8 +36,10 @@ def testing(model_name, save_dir, batch_size, y_test):
 	 print("[INFO] predicted: {}, actual: {}".format(gtLabels[prediction],
 		gtLabels[testLabels[i]]))
 
-		
-def test_one(model):
+
+ 
+ 		
+def test_new(model, userimagenumber):
  # initialize the ground-truth labels for the CIFAR-10 dataset
  gtLabels = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]
  
@@ -47,7 +47,8 @@ def test_one(model):
  print("[INFO] sampling one image from CIFAR-10...")
  (testData, testLabels) = cifar10.load_data()[1]
  testData = testData.astype("float") / 255.0
- idxs = np.random.choice(testData.shape[0], size=(1,), replace=False)
+ #idxs = np.random.choice(testData.shape[0], size=(1,), replace=False)
+ idxs = np.array([userimagenumber])
  (testData, testLabels) = (testData[idxs], testLabels[idxs])
  testLabels = testLabels.flatten()
 
