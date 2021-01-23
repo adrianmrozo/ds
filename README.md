@@ -6,10 +6,10 @@ by Ludwig Kraft & Adrian Mrozowski
 
 **This repository demonstrates the capabilities of machine learning for image recognition and classification**
 
-This repository is based on code from [Keras Team](https://github.com/keras-team), which demonstrates machine learning functionalities based on the [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) dataset.
+This repository is based on code from the [Keras Team](https://github.com/keras-team), which demonstrates machine learning functionalities based on the [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) dataset.
 It contains 60'000 small coloured 32x32 images subdivided into 10 different categories.
 Those categories are airplane, automobile, bird, cat, deer, dog, frog, horse, ship & truck.
-The first 50'000 images is considered as training data, which is used to train a Convolutional Neural Network (CNN).
+The first 50'000 images are considered as training data, which is used to train a Convolutional Neural Network (CNN).
 The other 10'000 images can be used to test the performance of the model.
 
 Without setting up anything on your machine, check out the code in our [Jupyter Notebook on Google Colab](https://colab.research.google.com/drive/1z95gJROm3aU2PaN4z1jZooFMTTbeSMz-?usp=sharing). It demonstrates the dataset and also the code that trains the model.
@@ -27,7 +27,7 @@ If a better performance of the model is desired the number of epochs can be incr
 
 We tried to make it as simple as possible for the end user. If there is no prior experience with Docker, we strongly recommend using the [Docker Playground](https://labs.play-with-docker.com/).
 
-After registration (free and straight forward) the user creates a new instance and can enters the following commands:
+After registration (free and straight forward) the user creates a new instance and can enter the following commands:
 
 ```
 git clone https://github.com/adrianmrozo/ds
@@ -37,7 +37,7 @@ docker-compose up
 
 The 3 above commands do the following: 
 1. Clones/copies this GitHub repository into a Docker Container on the website "play with docker"
-2.  Enters the folder "ds"
+2. Enters the folder "ds"
 3. Starts the prepared docker instructions, makes the code run
 
 Then the CNN is trained and after completion (up to 10 minutes) the user can access a flask provided web service to check the prediction.
