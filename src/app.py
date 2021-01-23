@@ -1,13 +1,9 @@
 # flask_ngrok_example.py
 from flask import Flask, redirect, url_for, render_template, request
-from test import test_one
 from test import test_new
 from main import model
 
 app = Flask(__name__)
-
-
-testData, test_label, pred_label, number = test_one(model)
 
 
 
