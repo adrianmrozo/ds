@@ -61,7 +61,7 @@ And everything should run by itself.
 
 **If you have experience in Python [not recommended]:**
 
-You can install the required packages out of requirements.txt file and try to run app.py in the "src" folder [not recommended, as not sufficiently tested and it was not optimized towards this usage, there too many dependencies regarding the packages.]
+You can install the required packages out of requirements.txt file and try to run app.py in the "src" folder [not recommended, as not sufficiently tested and it was not optimized towards this usage, there are too many dependencies within the packages, using docker is the most efficient way to use this code.]
 
 
 ## Additional functionalities:
