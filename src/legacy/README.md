@@ -1,6 +1,6 @@
 ﻿# <u> Data Science Toolkits and Architectures - A process summary
 
-This repository displays the end product of Adrian Mrozowski's and Ludwig Kraft's efforts of  University Lucernce's program *Data Science Toolkits and Architectures* led by Sandro Cilurzo and Arthur Habicht. 
+This repository displays the end product of Adrian Mrozowski's and Ludwig Kraft's efforts in the course *Data Science Toolkits and Architectures* led by Sandro Cilurzo and Arthur Habicht. 
 
 The program was split into several milestones, which were again divided into multiple subtasks.
 The reports in this folder describe the endeavor of our try-and-error process, plunging into the unknown and following paths that did not always lead to the desired result.
@@ -25,15 +25,14 @@ Then, a big challenge was to make the code run on our own machines and to instal
 
 We learn that the resulting model is a Convolutional Neural Network (CNN) and its important property to efficiently handle high dimensions of raw data. 
 
-On the question which parameters could we use to rate our CNN, we found out about the output sizes accuracy and loss.
+On the question which parameters we could use to rate our CNN, we found out about the output sizes accuracy and loss.
 
 
 #### <u>Linux Command Line and GitHub</u>
 We had to dive into two - at least for us - completely new concepts of using a computer. 
-We started our repository, got to know about the utmost importance of code versioning with GitHub for Software Development and set up a README file. 
+We started our repository, got to know about the utmost importance of code versioning with GitHub for software development and set up a README file. 
 
 We abandoned the UI and started using the Linux Command Line. Using ``pip`` and ``git`` commands appeared like learning a new language. We made our first commit and push by playing with ``git branch`` , ``git pull``, ``git add .`` , ``git commit -m "<your-commit-message>"`` and  ``git push``.
-
 
 
 ## Milestone 2
@@ -46,7 +45,7 @@ We learned about hash functions and the difference between python modules, scrip
 
 #### <u>Introduction to Docker </u>
 We were introduced to the concept of Docker Containers. The process of writing a Dockerfile, building a docker image, which then results in a container was endured. Docker volumes are used to insert or extract data from containers (mnemonic: box with hole). Using DockerHub to pull images, that somebody already built for us. Docker vs. virtual environments. Why do we need a requirements file and what do we store there?
-Then, we installed Docker and built our first Dockerfile, images and containers. Quick outlook on docker-compose.
+Then, we installed Docker and built our first Dockerfile, images and containers. Also we made first steps in docker-compose.
 
 #### <u>An Attempt of Coding: Modularization </u>
 First, we ensured that our code could load data, as well as train, save and load a CNN. Predictions using the model were made as well. Then, we needed to cut our ML code into several autonomous, stand-alone snippets of python code: modules.
@@ -97,7 +96,7 @@ We introduced ourselves to the concept of Jupyter Notebooks and used several to 
 
 #### <u>Putting it all together</u>
 
-In the fifth and last milestone, we put everything we learned together. First, theoretically describing the set-up of a web-based email spam filter and second, practically with our code and data: We built a web application with flask that accepts a POST request for a sample image, returns the predicted class to the user, saves the sample to a postgres database and, finally, displays the predicted image to the user. 
+In the fifth and last milestone, we put everything we learned together. First, theoretically describing the set-up of a web-based email spam filter and second, practically with our code and data: We built a web application with flask that accepts a POST request for a number to pick a sample image, it returns the predicted class to the user, saves the sample to a postgres database and, finally, displays the predicted image to the user. 
 
 
 -----
