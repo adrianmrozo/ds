@@ -5,6 +5,7 @@ services:
     build: .
     ports:
       - "5000:5000"
+      
     # Link this container to the postgres container with hostname 'postgres'
     external_links:
       - postgres:postgres
@@ -12,20 +13,16 @@ services:
       - .:/code
     environment:
       FLASK_ENV: production
-    depends_on:
-      - postgres
-    networks:
-      - cbr-open-data
       
   postgres:
     image: postgres:12.4-alpine
 
     # Expose the default Postgres port on localhost
     ports:
-      - '5432:5432'
+      - '5431:5432'
+    network_mode: 'bridge'
     container_name: 'postgres'
-    networks:
-      - cbr-open-data
+
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'pgpass'
@@ -35,10 +32,7 @@ services:
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
       - ./saved_models:/var/lib/postgresql/data
-      
-networks:
-  cbr-open-data:
-    driver: bridge
+    
       
 
 
