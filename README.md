@@ -1,37 +1,33 @@
-# A Demonstration of Data Science Toolkits and Architectures - Image recognition with Keras & Tensorflow on the CIFAR-10 dataset
+
+# A Demonstration of Data Science Toolkits and Architectures - Image Recognition with Keras & Tensorflow on the CIFAR-10 dataset
 by Ludwig Kraft & Adrian Mrozowski
 
 ## Description: 
 
-**This repository will demonstrate the capabilities of machine learning and image recognition**
+**This repository demonstrates the capabilities of machine learning for image recognition and classification**
 
-This repository is based on a code from the Keras Team (https://github.com/keras-team) which demonstrates machine learning functionalities based on the CIFAR-10 dataset.
-It is a dataset of 60000 32x32 colour images of 10 different categories.
-The 10 categories are: airplane, automobile, bird, cat, deer, dog, frog, horse, ship & truck.
-The code is first training a neural network with the 50000 pictures.
-The other 10000 pictures can be used to see how well the model is performing.
-You can find more background information about the dataset here:
-https://www.cs.toronto.edu/~kriz/cifar.html
+This repository is based on code from [Keras Team](https://github.com/keras-team), which demonstrates machine learning functionalities based on the [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) dataset.
+It contains 60'000 small coloured 32x32 images subdivided into 10 different categories.
+Those categories are airplane, automobile, bird, cat, deer, dog, frog, horse, ship & truck.
+The first 50'000 images is considered as training data, which is used to train a Convolutional Neural Network (CNN).
+The other 10'000 images can be used to test the performance of the model.
 
-Please find also here our Google Colab file, that demonstrates the dataset and also the code that trains the model:
-https://colab.research.google.com/drive/1z95gJROm3aU2PaN4z1jZooFMTTbeSMz-?usp=sharing
+Without setting up anything on your machine, check out the code in our [Jupyter Notebook on Google Colab](https://colab.research.google.com/drive/1z95gJROm3aU2PaN4z1jZooFMTTbeSMz-?usp=sharing). It demonstrates the dataset and also the code that trains the model.
 
-Please note that we have set the training epochs to 1, so that it is possible for the user to have within a good time period a first demonstration of the results.
-And even to training 1 epoch can take up to 10 minutes, so if something does not display, it's well possible that the model is still training.
-If you like to have a better model, you can take this code and change the number of epochs, the training time will increase accordingly.
+The CNN performs better, the more training rounds - "epochs" - are executed in the training process.
+It achieves 75% validation accuracy in 25 epochs, and 79% after 50 epochs.
+However, here the number of epochs equals one for the user to have a first demonstration of the results within an acceptable period of time, as one epoch as training even a single epoch can take up to 10 minutes. The accuracy after a single epoch is about 42%.
+
+If a better performance of the model is desired the number of epochs can be increased accordingly in the *set_initials* module.
 
 
-## Installation:
+## Installation
 
-**If you do not have any experience in Docker and/or Python:**
+### No or little experience with Docker and/or Python:
 
-We tried to make it as simple as possible for the end user, if you never used Docker before, we strongly recommend to use the following site:
+We tried to make it as simple as possible for the end user. If there is no prior experience with Docker, we strongly recommend using the [Docker Playground](https://labs.play-with-docker.com/).
 
-https://labs.play-with-docker.com/
-
-You have to register (it's free and quite easy) and afterwards you can open a terminal.
-
-You can enter the following commands:
+After registration (free and straight forward) the user creates a new instance and can enters the following commands:
 
 ```
 git clone https://github.com/adrianmrozo/ds
@@ -39,44 +35,44 @@ cd ds
 docker-compose up
 ```
 
-The 3 above commands do the following 
-1. You are cloning/copying this Github repository into the website "play with docker"
-2. You are entering the folder "ds"
-3. You are starting the prepared docker instructions by us, and our code will start to run
+The 3 above commands do the following: 
+1. Clones/copies this GitHub repository into a Docker Container on the website "play with docker"
+2.  Enters the folder "ds"
+3. Starts the prepared docker instructions, makes the code run
 
-Next the model will train, and after the training is done (up to 10 minutes) you should be able to access the website with the prediction.
+Then the CNN is trained and after completion (up to 10 minutes) the user can access a flask provided in port website to the prediction.
 Click on the port numbers on the right side next to "Open Port".
 
-If for some reason the browser will display:
-"This page isn’t working", just refresh/reopen it again, so that you see "Welcome!"
+In case the browser returns an error - "This page isn’t working" - just refresh/reopen the window.
+The user gets to the welcome page.
 
 
-**If you have Docker already installed:**
 
-You can open in your terminal the "ds" folder, and enter the command:
+### If Docker is already installed
+
+Open the "ds" folder  in your terminal and enter the command:
 ```
 docker-compose up
 ```
 And everything should run by itself.
 
-**If you have experience in Python [not recommended]:**
+### For Ninja Pythoneers [not recommended]
 
-You can install the required packages out of requirements.txt file and try to run app.py in the "src" folder [not recommended, as not sufficiently tested and it was not optimized towards this usage, there are too many dependencies within the packages, using docker is the most efficient way to use this code.]
+You can install the required packages of the requirements file manually in the respective versions and run the *app* module in python from the "src" folder. However, this is not recommended, as this project was not optimized towards this usage. There are many dependencies within the packages. Docker is the most efficient way to use this code.
 
 
-## Additional functionalities:
+## Additional functionalities
 
 This code is also starting a PostgreSQL database, and saves results out of the testing into the database.
 
 
-## Additional information:
+## Additional information
 
-This code is the end product from several milestones, containing again several sub tasks.
-You can find the reports to each milestone in the "reports" folder and code completing the sub tasks in the folder "/src/legacy".
+This repository is the end product from several milestones, containing again several sub tasks. 
+We documented our try and error and error process for each milestone in the *reports* folder. The accompanying code snippets for completing the sub tasks are stored in the folder "/src/legacy".
 
 
-## Technical descriptions:
-
+## Technical description
 
 ### Table of all packages including hashes
 
@@ -113,36 +109,8 @@ random2==1.0.1 \
 astunparse==1.6.3 \
     --hash=sha256:c2652417f2c8b5bb325c885ae329bdf3f86424075c4fd1a128674bc6fba4b8e8
 
-
-### In- and Output
-
-***Input:***
-We feed the Neural Network with a dataset - the CIFAR-10 dataset, which is a large number of pictures grouped into non-overlapping classes. 
-There exist training and test cases within the dataset.
-
-***Output:*** 
-- a trained Convolutional Neural Network
-
-### Dataset:
-We observe two datasets build by Alex Krizhevsky, Vinod Nair and Geoffrey Hinton consisting of millions of tiny color images from the web.
-
-1.) The CIFAR-10, which contains 60000 32x32 images sorted in 10 different classes. For each class there are 1000 randomly selected pictures from each class in the test batch. The rest of each class’ images are in the training batch.
-
-2.) The CIFAR-100 is a dataset similar to CIFAR-10, with the distinct fact of having 100 classes each containing 600 images with 500 training images and 100 testing images per class. The 100 classes are grouped into 20 superclasses.
-
-The classes are completely exclusive, which means there is no overlap of the classes. Each image is part of exactly one class. Both datasets are useful tools to train a multi-layer generative model that learns to extract meaningful features from images which resemble those found in the human visual cortex.
-
-The datasets help solving a classification problem of computer recognition. With the help of datasets as the observed ones deep learning approaches lead to major advances in computer vision to classify images, find objects in them, and label them with captions.
-
-##### What is Keras and how does it relate to Tensorflow? 
-Keras is a high-level Python neural networks library that runs on top of either TensorFlow or Theano and provides a Python interface for artificial neural networks. 
-Keras is a neural network library while TensorFlow is the open-source library for a number of various tasks in machine learning. Keras acts as an interface for the TensorFlow library.
-
-##### How is the data loaded?
-The  the code downloads data from https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz, which is the CIFAR-10 dataset discussed above.
-
 ## Credits: 
-Special credits to Sandro & Arthur
+Special Credits to supervisors [Sandro](https://github.com/sandroci) & [Arthur](https://github.com/habichta)
 
 ## License:
-cifar10_cnn.py is part of Keras, please find its licence [here](https://github.com/keras-team/keras/blob/master/LICENSE).
+The original code in cifar10_cnn.py is part of Keras, please find its licence [here](https://github.com/keras-team/keras/blob/master/LICENSE).
