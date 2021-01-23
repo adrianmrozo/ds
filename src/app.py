@@ -22,7 +22,7 @@ def predict():
         user = request.form["nm"]
         return redirect(url_for("user", usr=user))
     else:
-        output = '<form action="#" method="post"><p>Pick a number between 1 and 10000, the system will take out of the CIFAR-10 dataset the corresponding picture:</p><p><input type="text" name="nm" /></p><p><input type="submit" value="submit"/></p></form>'
+        output = '<form action="#" method="post"><p>Pick a number between 1 and 9999, the system will take out of the CIFAR-10 dataset the corresponding picture:</p><p><input type="text" name="nm" /></p><p><input type="submit" value="submit"/></p></form>'
         return output
 
 @app.route("/<usr>")
