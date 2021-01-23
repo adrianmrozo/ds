@@ -1,6 +1,7 @@
 # flask_ngrok_example.py
-from flask import Flask
+from flask import Flask, redirect, url_for, render_template, request
 from test import test_one
+from test import test_new
 from main import model
 
 app = Flask(__name__)
@@ -12,15 +13,24 @@ testData, test_label, pred_label, number = test_one(model)
 
 @app.route("/")
 def welcome():
-    output = "<h1>Welcome!</h1><br>Please add '/predict' to your browser line to see a test sample."
+    output = "<h1>Welcome!</h1><br>Please add '/predict' to your browser line to pick yourself a test image out of the CIFAR-10 test dataset"
     return output
-    
 
-@app.route("/predict")
+@app.route("/predict", methods=["POST", "GET"])
 def predict():
-    output = "<h1>Welcome!</h1><br>Please find below an overview of the testing.<br><br>An image has been selected for you (randomly) with the following image number out of the CIFAR 10 test dataset: " + str(number) + "<br><br>Please add in your browser URL '/yourimage' to see your test image, out of the CIFAR 10 test dataset." + "<br><br>The model predicted the following category of the picture: " + str(pred_label) + "<br><br>The following category is the correct one: " + str(test_label)
+    if request.method == "POST":
+        user = request.form["nm"]
+        return redirect(url_for("user", usr=user))
+    else:
+        output = '<form action="#" method="post"><p>Pick a number between 1 and 10000, the system will take out of the CIFAR-10 dataset the corresponding picture:</p><p><input type="text" name="nm" /></p><p><input type="submit" value="submit"/></p></form>'
+        return output
+
+@app.route("/<usr>")
+def user(usr):
+    testData, test_label, pred_label, number = test_new(model, int(usr))
+    output = "<h1>Welcome!</h1><br>Please find below an overview of the testing.<br><br>You have selected the following image number out of the CIFAR 10 test dataset: " + str(number) + "<br><br>Please replace in your browser URL your number and the hashtag and enter '/predict/yourimage' to see your test image, out of the CIFAR 10 test dataset. If it is the second time you are picking and testing a picture, you should reload it again so that your new picture is loaded." + "<br><br>The model predicted the following category of the picture: " + str(pred_label) + "<br><br>The following category is the correct one: " + str(test_label)
     return output
-    
+                            
 
 from flask import send_file
 

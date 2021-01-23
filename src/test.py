@@ -70,6 +70,39 @@ def test_one(model):
  return testData, test_label, pred_label, idxs[0]
 
  
+ 		
+def test_new(model, userimagenumber):
+ # initialize the ground-truth labels for the CIFAR-10 dataset
+ gtLabels = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]
+ 
+  # scale the data points into the range [0, 1]
+ print("[INFO] sampling one image from CIFAR-10...")
+ (testData, testLabels) = cifar10.load_data()[1]
+ testData = testData.astype("float") / 255.0
+ #idxs = np.random.choice(testData.shape[0], size=(1,), replace=False)
+ idxs = np.array([userimagenumber])
+ (testData, testLabels) = (testData[idxs], testLabels[idxs])
+ testLabels = testLabels.flatten()
+
+ # make predictions on the sample of testing data
+ print("[INFO] predicting on testing data...")
+ probs = model.predict(testData, batch_size=32)
+ predictions = probs.argmax(axis=1)
+ 
+ # loop over each of the testing data points
+ for (i, prediction) in enumerate(predictions):
+	 print("[INFO] predicted: {}, actual: {}".format(gtLabels[prediction], gtLabels[testLabels[i]]))
+	
+ for (i, prediction) in enumerate(predictions):
+  pred_label=gtLabels[prediction]
+  test_label=gtLabels[testLabels[i]] 
+ 
+ plt.imshow(testData[0])
+ plt.imsave('test.png', testData[0])
+	 
+ return testData, test_label, pred_label, idxs[0]
+
+ 
  
 
 
