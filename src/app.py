@@ -2,6 +2,9 @@
 from flask import Flask, redirect, url_for, render_template, request, send_file
 from test import test_new
 from main import model
+from postgres_db import savingtestresult
+import psycopg2
+import numpy as np
 
 app = Flask(__name__)
 
@@ -24,6 +27,7 @@ def predict():
 @app.route("/<usr>")
 def user(usr):
     test_data, test_label, pred_label, number = test_new(model, int(usr))
+    savingtestresult(testData, test_label, pred_label)
     if pred_label == test_label:
         pred_corr = "correct"
     else:
